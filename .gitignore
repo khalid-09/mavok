@@ -1,0 +1,18 @@
+# Root directory .gitignore
+
+# Environment files across all projects
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Common build directories
+dist/
+build/

@@ -1,0 +1,28 @@
+# Directus directory .gitignore
+
+# Database files
+data/
+data/database/
+
+# File uploads
+uploads/
+!uploads/.gitkeep
+
+.env
+
+database/
+
+# Docker runtime files
+.docker/
+*.log
+docker-compose.override.yml
+
+# Directus extensions build artifacts
+extensions/**/node_modules/
+extensions/**/.cache
+extensions/**/.temp
+extensions/**/dist
+!extensions/.gitkeep
+
+# Keep extension source code
+!extensions/**/src/
