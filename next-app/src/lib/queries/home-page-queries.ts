@@ -20,7 +20,7 @@ export const getHeroData = async (): Promise<HeroSection> => {
   }
 
   return item;
-};
+}; // Fn to fetch all data related to Hero Section
 
 export const getAboutData = async (): Promise<AboutSection> => {
   const item = await directus.request(
@@ -32,7 +32,7 @@ export const getAboutData = async (): Promise<AboutSection> => {
   }
 
   return item;
-};
+}; // Fn to fetch all data related to About Section
 
 export const getFooterLinksData = async (): Promise<
   Omit<FooterLinks, "date_created">[]
@@ -49,7 +49,7 @@ export const getFooterLinksData = async (): Promise<
   }
 
   return items;
-};
+}; // Fn to fetch Footer links
 
 export const getFaqData = async (): Promise<
   Omit<FAQs, "id" | "date_created">
@@ -66,7 +66,7 @@ export const getFaqData = async (): Promise<
   }
 
   return item;
-};
+}; // Fn to fetch FAQ data
 
 export const getInsideBoxData = async (): Promise<Omit<InsideBox, "id">> => {
   const item = await directus.request(
@@ -80,11 +80,17 @@ export const getInsideBoxData = async (): Promise<Omit<InsideBox, "id">> => {
   }
 
   return item;
-};
+}; // Fn to fetch InsideBoxSection data
 
 // export const getPaymentOptionsData = async () => {
 //   const item = await directus.request(
-//     readSingleton("payment_options", { fields: ["*"] }),
+//     readSingleton("payment_options", {
+//       fields: [
+//         "*",
+//         "paymentOptionImage.*",
+//         "paymentOptionImage.directus_files_id.*",
+//       ],
+//     }),
 //   );
 
 //   console.log(item);

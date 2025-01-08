@@ -4,12 +4,12 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
-import { roboto } from "../home-page/about-section";
 import { ChevronDown, LucideCopyright } from "lucide-react";
 import instaIcon from "../../../public/socials/instaLogo.png";
 import fbIcon from "../../../public/socials/fbLogo.png";
 import tiktokIcon from "../../../public/socials/tiktokLogo.png";
 import youtubeIcon from "../../../public/socials/youtubeLogo.png";
+import Description from "../description";
 
 const socials = [
   {
@@ -34,12 +34,18 @@ const socials = [
   },
 ];
 
+/**
+ * Footer component
+ * shows the footer links and a newsletter form and social icons
+ */
+
 const Footer = async () => {
   const footerLinks = await getFooterLinksData();
 
   return (
     <footer className="px-4 py-10 md:px-30 md:pb-12 md:pt-20">
       <div className="content space-y-8 md:space-y-16">
+        {/* Footer links  */}
         <div className="flex w-full flex-row gap-8 md:gap-14 customFooter:flex-col">
           <div className="grid w-full grid-cols-2 gap-8 lg:grid-cols-4">
             {footerLinks.map((link) => (
@@ -60,6 +66,8 @@ const Footer = async () => {
           </div>
           <NewsletterForm />
         </div>
+
+        {/* Payment method images with social icons */}
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div className="space-y-3">
             <p className="text-xs font-bold -tracking-1%">
@@ -81,14 +89,16 @@ const Footer = async () => {
             ))}
           </div>
         </div>
+
+        {/* Current year */}
         <div className="space-y-8 md:space-y-10">
           <Separator className="border-[#E5E5E5]" />
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
             <div className="flex items-center gap-1 text-primaryLight">
               <LucideCopyright size={16} />{" "}
-              <p className={`${roboto.className} antialiased`}>
+              <Description>
                 {new Date().getFullYear()} MAVOK. All right reserved
-              </p>
+              </Description>
             </div>
             <div className="flex items-center gap-1 font-bold uppercase -tracking-1%">
               <span>English/Australia</span>

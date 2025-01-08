@@ -1,26 +1,28 @@
 import { getAboutData } from "@/lib/queries/home-page-queries";
-import { Roboto } from "next/font/google";
 import Image from "next/image";
 import { FaPlay } from "react-icons/fa";
+import Description from "../description";
 
-export const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
+/**
+ * About Section
+ * Displays a title and description with a video (no video in directus currently so showing an image).
+ */
 
 const AboutSection = async () => {
   const data = await getAboutData();
 
   return (
-    <section className="space-y-8 bg-primaryDark px-4 pb-10 pt-20 text-white md:space-y-16 md:p-30">
+    <section className="bg-primaryDark px-4 pb-10 pt-20 text-white md:p-30">
       <div className="content space-y-8 md:space-y-16">
         <div className="space-y-3 md:space-y-4">
           <h4 className="text-center text-[2rem] font-bold uppercase -tracking-1% md:text-4xl">
             {data.heading}
           </h4>
-          <p
-            className={`${roboto.className} mx-auto max-w-[51.125rem] text-center text-primaryLight antialiased`}
-          >
+          <Description className="max-w-[51.125rem]">
             {data.description}
-          </p>
+          </Description>
         </div>
+
         <div className="relative h-[12.5rem] w-full md:h-[37.5rem]">
           <Image
             src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${data.video}`}

@@ -1,10 +1,15 @@
 import { getFaqData } from "@/lib/queries/home-page-queries";
 import { cn } from "@/lib/utils";
-import { roboto } from "./home-page/about-section";
+import Description from "./description";
 
 interface FaqsProps {
   shouldBeDark?: boolean;
 }
+
+/**
+ * FAQS Component
+ * Displays the FAQS (coming form directus), component can be dark or light
+ */
 
 const Faqs = async ({ shouldBeDark = false }: FaqsProps) => {
   const { content } = await getFaqData();
@@ -12,7 +17,7 @@ const Faqs = async ({ shouldBeDark = false }: FaqsProps) => {
   return (
     <section
       className={cn(
-        "md:py-22 px-4 py-10 text-white md:px-30",
+        "px-4 py-10 text-white md:px-30 md:py-22",
         shouldBeDark && "bg-primaryDark",
       )}
     >
@@ -23,13 +28,14 @@ const Faqs = async ({ shouldBeDark = false }: FaqsProps) => {
           </p>
           <h4
             className={cn(
-              "md:text-4.5xl text-3.5xl font-bold uppercase leading-10 -tracking--1%",
+              "text-3.5xl font-bold uppercase leading-10 -tracking--1% md:text-4.5xl",
               !shouldBeDark && "text-black",
             )}
           >
             frequently asked questions
           </h4>
         </div>
+
         <div className="grid grid-cols-2 gap-6 md:gap-16 customFooter:grid-cols-1">
           {content.map((faq, index) => (
             <div key={index} className="space-y-2">
@@ -41,11 +47,9 @@ const Faqs = async ({ shouldBeDark = false }: FaqsProps) => {
               >
                 {faq.question}
               </h6>
-              <p
-                className={`text-primaryLight ${roboto.className} text-lg antialiased`}
-              >
+              <Description className="text-start text-lg">
                 {faq.answer}
-              </p>
+              </Description>
             </div>
           ))}
         </div>

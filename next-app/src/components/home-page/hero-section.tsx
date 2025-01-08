@@ -16,12 +16,14 @@ const HeroSection = async () => {
   return (
     <section className="relative flex h-[56.25rem] w-full flex-col text-white customNav:justify-between">
       <Navbar navLinks={data.navLinks} />
-      <div className="px-30 space-y-6 py-[13.125rem] customNav:space-y-4 customNav:px-4 customNav:pb-6 customNav:pt-20">
+
+      {/* Center content piece */}
+      <div className="space-y-6 px-30 py-[13.125rem] customNav:space-y-4 customNav:px-4 customNav:pb-6 customNav:pt-20">
         <div className="max-w-[39.75rem] space-y-2">
-          <h5 className="-tracking--1% line-clamp-1 text-2xl font-bold text-primaryGreen">
+          <h5 className="line-clamp-1 text-2xl font-bold -tracking--1% text-primaryGreen">
             {data.description}
           </h5>
-          <h3 className="-tracking--1% line-clamp-3 text-5xl font-bold leading-[3.75rem] customNav:text-[2rem] customNav:leading-10">
+          <h3 className="line-clamp-3 text-5xl font-bold leading-[3.75rem] -tracking--1% customNav:text-[2rem] customNav:leading-10">
             {data.heading}
           </h3>
         </div>
@@ -34,7 +36,7 @@ const HeroSection = async () => {
             >
               <Link
                 href={button.buttonLink}
-                className="-tracking--1% text-sm font-bold uppercase"
+                className="text-sm font-bold uppercase -tracking--1%"
               >
                 {button.buttonText}
                 <ArrowRight
@@ -48,7 +50,9 @@ const HeroSection = async () => {
           ))}
         </div>
       </div>
-      <div className="px-30 flex justify-center py-8 customNav:hidden">
+
+      {/* Displays the features on the bottom of the section */}
+      <div className="flex justify-center px-30 py-8 customNav:hidden">
         {data.features.map((feature, index) => (
           <div key={index} className="w-full max-w-60 space-y-1 text-center">
             <h5 className="line-clamp-1 text-2xl font-bold uppercase leading-10">
@@ -60,6 +64,7 @@ const HeroSection = async () => {
           </div>
         ))}
       </div>
+      {/* // Image and overlay are abolute to the entire component */}
       <Image
         src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${data.heroImage}`}
         alt="Hero Background Image"
