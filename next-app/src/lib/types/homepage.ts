@@ -51,3 +51,13 @@ export interface InsideBox {
   description: string;
   content: { text: string }[];
 }
+
+export interface PaymentOptions {
+  id: string;
+  paymentOptionImage: {
+    id: string;
+    payment_options_id: string;
+    directus_files_id: string;
+  }[];
+  "paymentOptionImage.*": unknown;
+}

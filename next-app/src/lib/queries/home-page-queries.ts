@@ -94,16 +94,16 @@ export const getInsideBoxData = async (): Promise<Omit<InsideBox, "id">> => {
   return item;
 }; // Fn to fetch InsideBoxSection data which is a singleton collection
 
-// export const getPaymentOptionsData = async () => {
-//   const item = await directus.request(
-//     readSingleton("payment_options", {
-//       fields: [
-//         "*",
-//         "paymentOptionImage.*",
-//         "paymentOptionImage.directus_files_id.*",
-//       ],
-//     }),
-//   );
+export const getPaymentOptionsData = async () => {
+  const item = await directus.request(
+    readSingleton("payment_options", {
+      fields: ["*", "paymentOptionImage.*"],
+    }),
+  );
 
-//   console.log(item);
-// };
+  if (!item) {
+    throw new Error("Payment Options not found");
+  }
+
+  return item;
+};

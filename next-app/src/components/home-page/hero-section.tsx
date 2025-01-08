@@ -18,7 +18,7 @@ const HeroSection = async () => {
 
   return (
     <section className="relative flex h-[56.25rem] w-full flex-col text-white customNav:justify-between">
-      <Navbar navbarData={navbarData} />
+      <Navbar isDark navbarData={navbarData} />
 
       {/* Center content piece */}
       <div className="space-y-6 px-30 py-[13.125rem] customNav:space-y-4 customNav:px-4 customNav:pb-6 customNav:pt-20">
@@ -72,6 +72,7 @@ const HeroSection = async () => {
         src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${heroData.heroImage}`}
         alt="Hero Background Image"
         fill
+        priority
         className="absolute -z-10 object-cover"
       />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black to-transparent opacity-70" />

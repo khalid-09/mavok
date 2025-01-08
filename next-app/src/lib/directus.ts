@@ -6,6 +6,7 @@ import {
   HeroSection,
   InsideBox,
   Navbar,
+  PaymentOptions,
 } from "./types/homepage";
 
 interface Schema {
@@ -15,6 +16,7 @@ interface Schema {
   faqs: FAQs;
   inside_box: InsideBox;
   navbar: Navbar;
+  payment_options: PaymentOptions;
 }
 
 export const directus = createDirectus<Schema>(

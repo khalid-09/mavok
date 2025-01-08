@@ -16,7 +16,7 @@ const InsideBoxSection = async () => {
         key={index}
         className="h-46 w-full rounded-lg border-none bg-secondaryDark p-4 md:h-[18.25rem] md:p-8"
       >
-        <span className="text-base font-bold leading-5 -tracking--1% text-white md:text-2xl md:leading-[1.875rem]">
+        <span className="break-words text-base font-bold leading-5 -tracking--1% text-white md:text-xl md:leading-[1.875rem]">
           {item.text}
         </span>
       </Card>
@@ -30,7 +30,7 @@ const InsideBoxSection = async () => {
         className="flex w-full flex-row gap-3 md:gap-4 customNav:flex-col"
       >
         <Card className="h-46 w-full max-w-[37rem] rounded-lg border-none bg-secondaryDark p-4 md:h-[37.5rem] md:p-8 customNav:max-w-full">
-          <span className="text-base font-bold leading-5 -tracking--1% text-white md:text-2xl md:leading-[1.875rem]">
+          <span className="text-base font-bold leading-5 -tracking--1% text-white md:text-xl md:leading-[1.875rem]">
             {boxes[0].props.children}
           </span>
         </Card>

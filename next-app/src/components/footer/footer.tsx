@@ -1,4 +1,7 @@
-import { getFooterLinksData } from "@/lib/queries/home-page-queries";
+import {
+  getFooterLinksData,
+  getPaymentOptionsData,
+} from "@/lib/queries/home-page-queries";
 import NewsletterForm from "./newsletter-form";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -40,8 +43,10 @@ const socials = [
  */
 
 const Footer = async () => {
-  const footerLinks = await getFooterLinksData();
-
+  const [footerLinks, data] = await Promise.all([
+    getFooterLinksData(),
+    getPaymentOptionsData(),
+  ]);
   return (
     <footer className="px-4 py-10 md:px-30 md:pb-12 md:pt-20">
       <div className="content space-y-8 md:space-y-16">
@@ -56,7 +61,10 @@ const Footer = async () => {
                 <p className="font-bold uppercase -tracking-1%">{link.title}</p>
                 <ul className="flex flex-col gap-3 text-primaryLight">
                   {link.links.map((link, index) => (
-                    <li key={index}>
+                    <li
+                      className="transition-all duration-300 hover:scale-105 hover:text-primaryGreen"
+                      key={index}
+                    >
                       <Link href={link.url}>{link.label}</Link>
                     </li>
                   ))}
@@ -73,6 +81,18 @@ const Footer = async () => {
             <p className="text-xs font-bold -tracking-1%">
               PAYMENT METHODS WE ACCEPT
             </p>
+            <div className="flex items-center gap-1.5">
+              {data.paymentOptionImage.map((image) => (
+                <div key={image.id} className="relative h-5 w-8 md:w-7">
+                  <Image
+                    src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${image.directus_files_id}`}
+                    alt="Logo"
+                    fill
+                    className="absolute object-contain"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex items-center gap-3">
             {socials.map((social, index) => (
