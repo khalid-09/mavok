@@ -39,3 +39,10 @@ export interface FAQs {
   id: string;
   content: { question: string; answer: string }[];
 }
+
+export interface InsideBox {
+  id: string;
+  title: string;
+  description: string;
+  content: { text: string }[];
+}

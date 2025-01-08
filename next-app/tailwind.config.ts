@@ -14,6 +14,7 @@ export default {
         customFooter: { max: "850px" },
       },
       colors: {
+        secondaryDark: "hsl(var(--secondary-dark))",
         primaryBorder: "hsl(var(--primary-border))",
         primaryLight: "hsl(var(--primary-light))",
         primaryGreen: "hsl(var(--primary-green))",
@@ -64,8 +65,16 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      height: {
+        "46": "11.25rem",
+      },
+      fontSize: {
+        "4.5xl": "2.5rem",
+        "3.5xl": "2rem",
+      },
       spacing: {
         "30": "7.5rem",
+        "22": "5.5rem",
       },
       letterSpacing: {
         "-1%": "-0.01em",
