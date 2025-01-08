@@ -5,6 +5,7 @@ import {
   FooterLinks,
   HeroSection,
   InsideBox,
+  Navbar,
 } from "./types/homepage";
 
 interface Schema {
@@ -13,6 +14,7 @@ interface Schema {
   footer_links: FooterLinks[];
   faqs: FAQs;
   inside_box: InsideBox;
+  navbar: Navbar;
 }
 
 export const directus = createDirectus<Schema>(

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { getHeroData } from "@/lib/queries/home-page-queries";
+import { getHeroData, getNavBarData } from "@/lib/queries/home-page-queries";
 import Navbar from "../navbar";
 import { Button } from "../ui/button";
 
@@ -11,24 +11,27 @@ import { Button } from "../ui/button";
  */
 
 const HeroSection = async () => {
-  const data = await getHeroData();
+  const [heroData, navbarData] = await Promise.all([
+    getHeroData(),
+    getNavBarData(),
+  ]);
 
   return (
     <section className="relative flex h-[56.25rem] w-full flex-col text-white customNav:justify-between">
-      <Navbar navLinks={data.navLinks} />
+      <Navbar navbarData={navbarData} />
 
       {/* Center content piece */}
       <div className="space-y-6 px-30 py-[13.125rem] customNav:space-y-4 customNav:px-4 customNav:pb-6 customNav:pt-20">
         <div className="max-w-[39.75rem] space-y-2">
           <h5 className="line-clamp-1 text-2xl font-bold -tracking--1% text-primaryGreen">
-            {data.description}
+            {heroData.description}
           </h5>
           <h3 className="line-clamp-3 text-5xl font-bold leading-[3.75rem] -tracking--1% customNav:text-[2rem] customNav:leading-10">
-            {data.heading}
+            {heroData.heading}
           </h3>
         </div>
         <div className="flex gap-2 customNav:flex-col">
-          {data.heroButton.map((button, index) => (
+          {heroData.heroButton.map((button, index) => (
             <Button
               key={index}
               asChild
@@ -53,7 +56,7 @@ const HeroSection = async () => {
 
       {/* Displays the features on the bottom of the section */}
       <div className="flex justify-center px-30 py-8 customNav:hidden">
-        {data.features.map((feature, index) => (
+        {heroData.features.map((feature, index) => (
           <div key={index} className="w-full max-w-60 space-y-1 text-center">
             <h5 className="line-clamp-1 text-2xl font-bold uppercase leading-10">
               {feature.title}
@@ -66,7 +69,7 @@ const HeroSection = async () => {
       </div>
       {/* // Image and overlay are abolute to the entire component */}
       <Image
-        src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${data.heroImage}`}
+        src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${heroData.heroImage}`}
         alt="Hero Background Image"
         fill
         className="absolute -z-10 object-cover"

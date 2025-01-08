@@ -1,9 +1,14 @@
-export interface HeroSection {
+export interface Navbar {
   id: string;
   navLinks: {
     label: string;
     url: string;
   }[];
+  logo: string;
+}
+
+export interface HeroSection {
+  id: string;
   features: {
     title: string;
     description: string;
