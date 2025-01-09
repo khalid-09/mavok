@@ -21,5 +21,5 @@ interface Schema {
 }
 
 export const directus = createDirectus<Schema>(
-  process.env.DIRECTUS_API_ENDPOINT!,
+  process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT!,
 ).with(rest()); // Directs client with Schema

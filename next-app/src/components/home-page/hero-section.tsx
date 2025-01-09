@@ -69,7 +69,7 @@ const HeroSection = async () => {
       </div>
       {/* // Image and overlay are abolute to the entire component */}
       <Image
-        src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${heroData.heroImage}`}
+        src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${heroData.heroImage}`}
         alt="Hero Background Image"
         fill
         priority

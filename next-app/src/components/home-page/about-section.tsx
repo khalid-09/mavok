@@ -25,7 +25,7 @@ const AboutSection = async () => {
 
         <div className="relative h-[12.5rem] w-full md:h-[37.5rem]">
           <Image
-            src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${data.video}`}
+            src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${data.video}`}
             alt="video"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

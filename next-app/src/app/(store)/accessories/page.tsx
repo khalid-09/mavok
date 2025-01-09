@@ -42,7 +42,7 @@ const ProductsPage = async () => {
             >
               <div className="relative h-20 w-full">
                 <Image
-                  src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${category.categoryImage}`}
+                  src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${category.categoryImage}`}
                   fill
                   className="absolute object-contain"
                   alt="Product image"
@@ -100,7 +100,7 @@ const AccessoriesGrid = async ({ category }: { category: string }) => {
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:gap-6">
       {accessories.map((product, index) => (
-        <ProdcutCard key={index} product={product} />
+        <ProdcutCard index={index} key={index} product={product} />
       ))}
     </div>
   );

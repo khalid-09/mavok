@@ -34,7 +34,7 @@ const Navbar = async ({
       <div className="flex items-center gap-10">
         <Link href="/">
           <Image
-            src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${logo}.svg`}
+            src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${logo}.svg`}
             alt="Logo"
             height={18}
             width={117}

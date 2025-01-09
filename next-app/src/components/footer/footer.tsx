@@ -78,7 +78,7 @@ const Footer = async () => {
               {data.paymentImages.map((image) => (
                 <div key={image.id} className="relative h-5 w-8 md:w-7">
                   <Image
-                    src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${image.directus_files_id}`}
+                    src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${image.directus_files_id}`}
                     alt="Logo"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
