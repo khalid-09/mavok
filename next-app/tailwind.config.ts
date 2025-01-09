@@ -14,6 +14,7 @@ export default {
         customFooter: { max: "850px" },
       },
       colors: {
+        secondaryLight: "hsla(var(--secondary-light))",
         secondaryDark: "hsl(var(--secondary-dark))",
         primaryBorder: "hsl(var(--primary-border))",
         primaryLight: "hsl(var(--primary-light))",

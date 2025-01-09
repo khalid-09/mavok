@@ -2,10 +2,9 @@ import { getInsideBoxData } from "@/lib/queries/home-page-queries";
 import { Card } from "../ui/card";
 import Description from "../description";
 
-/**
- * InsideBoxSection component
- * Displays features or what we get in a box of a product in a bento grid style fashion.
- */
+/**InsideBoxSection component
+  Displays features or what we get in a box of a product in a bento grid style fashion.
+*/
 
 const InsideBoxSection = async () => {
   const data = await getInsideBoxData();
@@ -61,7 +60,7 @@ const InsideBoxSection = async () => {
       <div className="content space-y-8 md:space-y-16">
         <div className="space-y-3">
           <p className="text-center text-sm font-bold uppercase -tracking--1% text-primaryGreen md:text-base">
-            what&apos;s in the box
+            what's in the box
           </p>
           <h4 className="text-center text-3.5xl font-bold uppercase -tracking--1% md:text-4.5xl">
             {data.title}
