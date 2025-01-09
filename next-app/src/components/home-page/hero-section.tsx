@@ -73,6 +73,7 @@ const HeroSection = async () => {
         alt="Hero Background Image"
         fill
         priority
+        loading="eager"
         className="absolute -z-10 object-cover"
       />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black to-transparent opacity-70" />

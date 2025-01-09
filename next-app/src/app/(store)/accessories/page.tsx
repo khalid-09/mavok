@@ -4,13 +4,24 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, Filter } from "lucide-react";
 import Image from "next/image";
 import product from "@/../public/product.png";
+import {
+  getAccessoriesData,
+  getCategoriesData,
+} from "@/lib/queries/accessories-page-queries";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const ProductsPage = () => {
+const ProductsPage = async () => {
+  const categories = await getCategoriesData();
+
   return (
-    <section>
-      <div className="flex items-center justify-center border-b border-primaryBorder p-4 sm:px-30 sm:py-4">
+    <Tabs defaultValue="all" className="w-full">
+      <TabsList className="flex items-center justify-center rounded-none border-b border-primaryBorder p-4 sm:px-30 sm:py-4">
         <div className="flex items-center gap-3 sm:gap-4">
-          <div className="bg-secondaryLight flex h-[9.25rem] w-[6.625rem] flex-col justify-between rounded-lg px-3 pb-[1.125rem] pt-3.5 sm:w-[7.75rem]">
+          {/* These are the tabs */}
+          <TabsTrigger
+            value="all"
+            className="flex h-[9.25rem] w-[6.625rem] flex-col justify-between rounded-lg px-3 pb-[1.125rem] pt-3.5 sm:w-[7.75rem]"
+          >
             <div className="relative h-20 w-full">
               <Image
                 src={product}
@@ -19,38 +30,31 @@ const ProductsPage = () => {
                 alt="Product image"
               />
             </div>
-            <span className="line-clamp-2 text-center text-sm font-bold uppercase -tracking--1%">
+            <span className="text-center text-sm font-bold uppercase -tracking--1%">
               All
             </span>
-          </div>
-          <div className="flex h-[9.25rem] w-[6.625rem] flex-col justify-between rounded-lg px-3 pb-[1.125rem] pt-3.5 sm:w-[7.75rem]">
-            <div className="relative h-20 w-full">
-              <Image
-                src={product}
-                fill
-                className="absolute object-contain"
-                alt="Product image"
-              />
-            </div>
-            <span className="line-clamp-2 text-center text-sm font-bold uppercase -tracking--1%">
-              Torches
-            </span>
-          </div>
-          <div className="flex h-[9.25rem] w-[6.625rem] flex-col justify-between rounded-lg px-3 pb-[1.125rem] pt-3.5 sm:w-[7.75rem]">
-            <div className="relative h-20 w-full shrink-0">
-              <Image
-                src={product}
-                fill
-                className="absolute object-contain"
-                alt="Product image"
-              />
-            </div>
-            <span className="line-clamp-2 text-center text-sm font-bold uppercase -tracking--1%">
-              Machine Accessories
-            </span>
-          </div>
+          </TabsTrigger>
+          {categories.map((category) => (
+            <TabsTrigger
+              key={category.id}
+              value={category.categoryName}
+              className="flex h-[9.25rem] w-[6.625rem] flex-col justify-between rounded-lg px-3 pb-[1.125rem] pt-3.5 sm:w-[7.75rem]"
+            >
+              <div className="relative h-20 w-full">
+                <Image
+                  src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${category.categoryImage}`}
+                  fill
+                  className="absolute object-contain"
+                  alt="Product image"
+                />
+              </div>
+              <span className="text-center text-sm font-bold uppercase -tracking--1%">
+                {category.categoryName}
+              </span>
+            </TabsTrigger>
+          ))}
         </div>
-      </div>
+      </TabsList>
       <div className="bg-secondaryLight p-4 pb-10 xl:px-30 xl:py-16">
         <div className="content space-y-4 md:space-y-6">
           <div className="flex w-full items-center justify-between">
@@ -73,17 +77,31 @@ const ProductsPage = () => {
               </Button>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:gap-6">
-            {[...Array(12)].map((_, i) => (
-              <div key={i} className="flex">
-                <ProdcutCard />
-              </div>
-            ))}
-          </div>
+          {/* Here we get show the content based on the tab */}
+          <TabsContent value="all">
+            <AccessoriesGrid category="all" />
+          </TabsContent>
+          {categories.map((category) => (
+            <TabsContent key={category.id} value={category.categoryName}>
+              <AccessoriesGrid category={category.categoryName} />
+            </TabsContent>
+          ))}
         </div>
       </div>
-    </section>
+    </Tabs>
   );
 };
 
 export default ProductsPage;
+
+const AccessoriesGrid = async ({ category }: { category: string }) => {
+  const accessories = await getAccessoriesData(category);
+
+  return (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:gap-6">
+      {accessories.map((product, index) => (
+        <ProdcutCard key={index} product={product} />
+      ))}
+    </div>
+  );
+};

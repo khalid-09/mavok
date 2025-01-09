@@ -60,12 +60,12 @@ const InsideBoxSection = async () => {
       <div className="content space-y-8 md:space-y-16">
         <div className="space-y-3">
           <p className="text-center text-sm font-bold uppercase -tracking--1% text-primaryGreen md:text-base">
-            what's in the box
+            what&apo;s in the box
           </p>
           <h4 className="text-center text-3.5xl font-bold uppercase -tracking--1% md:text-4.5xl">
             {data.title}
           </h4>
-          <Description className="max-w-[47.313rem] md:text-lg">
+          <Description className="mx-auto max-w-[47.313rem] md:text-lg">
             {data.description}
           </Description>
         </div>

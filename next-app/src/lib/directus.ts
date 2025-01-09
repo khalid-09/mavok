@@ -2,25 +2,24 @@ import { createDirectus, rest } from "@directus/sdk";
 import {
   AboutSection,
   FAQs,
-  FooterLinks,
+  Footer,
   HeroSection,
   InsideBox,
   Navbar,
-  PaymentOptions,
 } from "./types/homepage";
+import { Accessories, Categories } from "./types/accessories";
 
 interface Schema {
+  navbar: Navbar;
   hero_section: HeroSection;
   about_section: AboutSection;
-  footer_links: FooterLinks[];
-  faqs: FAQs;
   inside_box: InsideBox;
-  navbar: Navbar;
-  payment_options: PaymentOptions;
+  faqs: FAQs;
+  footer: Footer;
+  accessories: Accessories[];
+  categories: Categories[];
 }
 
 export const directus = createDirectus<Schema>(
   process.env.DIRECTUS_API_ENDPOINT!,
-).with(rest());
-
-// Directs client to with Schema
+).with(rest()); // Directs client with Schema

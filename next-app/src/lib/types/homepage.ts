@@ -29,14 +29,23 @@ export interface AboutSection {
   description: string;
 }
 
-export interface FooterLinks {
-  date_created: string;
+export interface Footer {
   id: string;
-  title: string;
-  links: {
-    label: string;
-    url: string;
+  date_created: string;
+  navLinks: {
+    title: string;
+    links: {
+      label: string;
+      url: string;
+    }[];
   }[];
+  socials: { socialImage: string; url: string }[];
+  paymentImages: {
+    id: number;
+    footer_id: string;
+    directus_files_id: string;
+  }[];
+  "paymentImages.*": unknown;
 }
 
 export interface FAQs {
@@ -50,14 +59,4 @@ export interface InsideBox {
   title: string;
   description: string;
   content: { text: string }[];
-}
-
-export interface PaymentOptions {
-  id: string;
-  paymentOptionImage: {
-    id: string;
-    payment_options_id: string;
-    directus_files_id: string;
-  }[];
-  "paymentOptionImage.*": unknown;
 }

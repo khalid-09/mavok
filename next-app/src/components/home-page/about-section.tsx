@@ -18,7 +18,7 @@ const AboutSection = async () => {
           <h4 className="text-center text-[2rem] font-bold uppercase -tracking-1% md:text-4xl">
             {data.heading}
           </h4>
-          <Description className="max-w-[51.125rem]">
+          <Description className="mx-auto max-w-[51.125rem]">
             {data.description}
           </Description>
         </div>
@@ -28,6 +28,7 @@ const AboutSection = async () => {
             src={`${process.env.DIRECTUS_API_ENDPOINT}/assets/${data.video}`}
             alt="video"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="absolute object-cover"
           />
           <div className="absolute inset-0 bg-[hsla(0,0%,4%,0.35)] backdrop-blur-[8px]"></div>

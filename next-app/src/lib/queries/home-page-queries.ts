@@ -1,14 +1,15 @@
 import { directus } from "../directus";
-import { readItems, readSingleton } from "@directus/sdk";
+import { readSingleton } from "@directus/sdk";
 import {
   AboutSection,
   FAQs,
-  FooterLinks,
+  Footer,
   HeroSection,
   InsideBox,
+  Navbar,
 } from "../types/homepage";
 
-export const getNavBarData = async () => {
+export const getNavBarData = async (): Promise<Navbar> => {
   const item = await directus.request(
     readSingleton("navbar", { fields: ["*"] }),
   );
@@ -46,23 +47,6 @@ export const getAboutData = async (): Promise<AboutSection> => {
   return item;
 }; // Fn to fetch all data related to About Section which is a singleton collection
 
-export const getFooterLinksData = async (): Promise<
-  Omit<FooterLinks, "date_created">[]
-> => {
-  const items = await directus.request(
-    readItems("footer_links", {
-      fields: ["title", "links", "id"],
-      sort: ["date_created"],
-    }),
-  );
-
-  if (!items) {
-    throw new Error("Footer links not found");
-  }
-
-  return items;
-}; // Fn to fetch Footer links which is an array of objects
-
 export const getFaqData = async (): Promise<
   Omit<FAQs, "id" | "date_created">
 > => {
@@ -94,15 +78,15 @@ export const getInsideBoxData = async (): Promise<Omit<InsideBox, "id">> => {
   return item;
 }; // Fn to fetch InsideBoxSection data which is a singleton collection
 
-export const getPaymentOptionsData = async () => {
+export const getFooterData = async (): Promise<Footer> => {
   const item = await directus.request(
-    readSingleton("payment_options", {
-      fields: ["*", "paymentOptionImage.*"],
+    readSingleton("footer", {
+      fields: ["*", "paymentImages.*"],
     }),
   );
 
   if (!item) {
-    throw new Error("Payment Options not found");
+    throw new Error("Footer data not found");
   }
 
   return item;
