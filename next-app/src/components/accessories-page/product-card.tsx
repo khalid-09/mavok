@@ -26,7 +26,7 @@ const ProdcutCard = ({ product, index }: ProductCardProps) => {
       viewport={{ once: true, margin: "-30px" }}
       transition={{
         duration: 0.3,
-        delay: index * 0.1,
+        delay: index * 0.05,
         ease: "easeOut",
       }}
     >

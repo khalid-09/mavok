@@ -14,6 +14,10 @@ export default {
         customFooter: { max: "850px" },
       },
       colors: {
+        primaryRed: "hsl(var(--primary-red))",
+        grey: "hsl(var(--grey))",
+        starOrange: "hsl(var(--star-orange))",
+        tertiaryLight: "hsl(var(--tertiary-light))",
         secondaryLight: "hsla(var(--secondary-light))",
         secondaryDark: "hsl(var(--secondary-dark))",
         primaryBorder: "hsl(var(--primary-border))",
@@ -79,6 +83,9 @@ export default {
       },
       letterSpacing: {
         "-1%": "-0.01em",
+      },
+      boxShadow: {
+        custom: "0px 1px 2px 0px hsla(240, 16%, 6%, 0.06)",
       },
     },
   },

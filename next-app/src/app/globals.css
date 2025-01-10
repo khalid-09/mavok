@@ -36,9 +36,13 @@ body {
     --primary-green: 121 77% 27%;
     --primary-dark: 0 0% 4%;
     --primary-light: 0 0% 45%;
+    --star-orange: 30 95% 50%;
     --secondary-light: 0 0% 98%;
+    --tertiary-light: 0 0% 96%;
+    --grey: 224 11% 45%;
     --primary-border: 0 0% 90%;
     --secondary-dark: 0 0% 9%;
+    --primary-red: 352 89% 60%;
   }
   .dark {
     --background: 0 0% 3.9%;
