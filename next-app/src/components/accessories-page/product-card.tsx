@@ -8,8 +8,8 @@ import { Accessories } from "@/lib/types/accessories";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 
-const MotionLink = motion(Link);
-const MotionButton = motion(Button);
+const MotionLink = motion.create(Link);
+const MotionButton = motion.create(Button);
 
 interface ProductCardProps {
   product: Accessories;
@@ -70,6 +70,7 @@ const ProdcutCard = ({ product, index }: ProductCardProps) => {
           </div>
           <MotionButton
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               router.push("/cart");
             }}

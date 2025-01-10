@@ -1,3 +1,5 @@
+import Faqs from "@/components/faqs";
+
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -5,7 +7,12 @@ interface ProductPageProps {
 const ProductPage = async ({ params }: ProductPageProps) => {
   const slug = (await params).slug;
 
-  return <div>{slug}</div>;
+  return (
+    <div>
+      {slug}
+      <Faqs />
+    </div>
+  );
 };
 
 export default ProductPage;

@@ -1,7 +1,6 @@
 import ProdcutCard from "@/components/accessories-page/product-card";
 import Description from "@/components/description";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, Filter } from "lucide-react";
+import { Filter } from "lucide-react";
 import Image from "next/image";
 import product from "@/../public/product.png";
 import {
@@ -9,15 +8,24 @@ import {
   getCategoriesData,
 } from "@/lib/queries/accessories-page-queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SortButton from "@/components/accessories-page/sort-button";
 
-const ProductsPage = async () => {
-  const categories = await getCategoriesData();
+interface PageProps {
+  searchParams: Promise<{ sort?: string }>;
+}
+
+const ProductsPage = async ({ searchParams }: PageProps) => {
+  const [categories, params] = await Promise.all([
+    getCategoriesData(),
+    searchParams,
+  ]);
+
+  const sortOrder = params?.sort === "a-z" ? "a-z" : "recommendation";
 
   return (
     <Tabs defaultValue="all" className="w-full">
       <TabsList className="flex items-center justify-center rounded-none border-b border-primaryBorder p-4 sm:px-30 sm:py-4">
         <div className="flex items-center gap-3 sm:gap-4">
-          {/* These are the tabs */}
           <TabsTrigger
             value="all"
             className="flex h-[9.25rem] w-[6.625rem] flex-col justify-between rounded-lg px-3 pb-[1.125rem] pt-3.5 sm:w-[7.75rem]"
@@ -66,24 +74,18 @@ const ProductsPage = async () => {
                 Sort by:
               </Description>
               <Filter className="block text-primaryLight md:hidden" size={16} />
-              <Button
-                className="flex h-8 items-center gap-2 rounded-md p-1 md:p-2 md:pl-3"
-                variant="ghost"
-              >
-                <span className="text-xs font-bold uppercase -tracking--1%">
-                  Recommendation
-                </span>
-                <ChevronDown size={16} />
-              </Button>
+              <SortButton currentSort={sortOrder} />
             </div>
           </div>
-          {/* Here we get show the content based on the tab */}
           <TabsContent value="all">
-            <AccessoriesGrid category="all" />
+            <AccessoriesGrid category="all" sortOrder={sortOrder} />
           </TabsContent>
           {categories.map((category) => (
             <TabsContent key={category.id} value={category.categoryName}>
-              <AccessoriesGrid category={category.categoryName} />
+              <AccessoriesGrid
+                category={category.categoryName}
+                sortOrder={sortOrder}
+              />
             </TabsContent>
           ))}
         </div>
@@ -94,8 +96,14 @@ const ProductsPage = async () => {
 
 export default ProductsPage;
 
-const AccessoriesGrid = async ({ category }: { category: string }) => {
-  const accessories = await getAccessoriesData(category);
+const AccessoriesGrid = async ({
+  category,
+  sortOrder,
+}: {
+  category: string;
+  sortOrder: "recommendation" | "a-z";
+}) => {
+  const accessories = await getAccessoriesData(category, sortOrder);
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:gap-6">

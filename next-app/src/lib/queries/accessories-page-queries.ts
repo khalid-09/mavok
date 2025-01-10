@@ -11,6 +11,7 @@ class AccessoriesError extends Error {
 
 export const getAccessoriesData = async (
   categoryName?: string,
+  sortOrder: "recommendation" | "a-z" = "recommendation",
 ): Promise<Accessories[]> => {
   let filter = {};
 
@@ -30,11 +31,12 @@ export const getAccessoriesData = async (
     const items = await directus.request(
       readItems("accessories", {
         fields: ["*", "productImages.*", "category.categories_id.*"],
-        filter: filter,
+        filter,
+        sort: sortOrder === "a-z" ? "productTitle" : [],
       }),
     );
 
-    if (items.length === 0) {
+    if (!items || items.length === 0) {
       throw new AccessoriesError(
         `No accessories found${categoryName ? ` for category: ${categoryName}` : ""}`,
       );
@@ -42,6 +44,8 @@ export const getAccessoriesData = async (
 
     return items;
   } catch (error: unknown) {
+    console.error("Directus error:", error);
+
     if (error instanceof AccessoriesError) {
       throw error;
     }
@@ -53,13 +57,25 @@ export const getAccessoriesData = async (
 };
 
 export const getCategoriesData = async (): Promise<Categories[]> => {
-  const items = await directus.request(
-    readItems("categories", { fields: ["*"] }),
-  );
+  try {
+    const items = await directus.request(
+      readItems("categories", {
+        fields: ["*"],
+      }),
+    );
 
-  if (items.length === 0) {
-    throw new Error("No categories found");
+    if (!items || items.length === 0) {
+      throw new AccessoriesError("No categories found");
+    }
+
+    return items;
+  } catch (error: unknown) {
+    if (error instanceof AccessoriesError) {
+      throw error;
+    }
+
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    throw new AccessoriesError(`Failed to fetch categories: ${errorMessage}`);
   }
-
-  return items;
 };
