@@ -21,13 +21,29 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
+    networks:
+      - internal
 
   postgres:
     image: postgres:16
+    container_name: ${PROJECT_NAME:-directus-db}-postgres
     volumes:
       - ./data/database:/var/lib/postgresql/data
     environment:
+      POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      PGDATA: '/var/lib/postgresql/data'
+      POSTGRES_INITDB_ARGS: '-E UTF8 --locale=C'
+    command: ['postgres', '-cshared_preload_libraries=pg_stat_statements']
+    ports:
+      - 5432:5432
     restart: unless-stopped
+    networks:
+      internal:
+        aliases:
+          - ${DB_HOST:-postgres}
+
+networks:
+  internal:
+    name: ${PROJECT_NAME:-directus}
