@@ -4,6 +4,7 @@ import Description from "./description";
 
 interface FaqsProps {
   shouldBeDark?: boolean;
+  className?: string;
 }
 
 /**
@@ -11,7 +12,7 @@ interface FaqsProps {
  * Displays the FAQS (coming form directus), component can be dark or light
  */
 
-const Faqs = async ({ shouldBeDark = false }: FaqsProps) => {
+const Faqs = async ({ shouldBeDark = false, className }: FaqsProps) => {
   const { content } = await getFaqData();
 
   return (
@@ -19,6 +20,7 @@ const Faqs = async ({ shouldBeDark = false }: FaqsProps) => {
       className={cn(
         "px-4 py-10 text-white md:px-30 md:py-22",
         shouldBeDark && "bg-primaryDark",
+        className,
       )}
     >
       <div className="content space-y-6 md:space-y-16">

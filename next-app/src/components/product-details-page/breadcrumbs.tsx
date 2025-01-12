@@ -11,7 +11,7 @@ import Description from "../description";
 const BreadCrumbs = () => {
   return (
     <Breadcrumb>
-      <BreadcrumbList className="flex items-center sm:gap-2">
+      <BreadcrumbList className="flex items-center gap-1 sm:gap-2">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">
             <Description className="text-sm font-medium text-primaryLight">

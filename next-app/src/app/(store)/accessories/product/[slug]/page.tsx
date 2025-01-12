@@ -3,39 +3,41 @@ import Faqs from "@/components/faqs";
 import BreadCrumbs from "@/components/product-details-page/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { getFooterData } from "@/lib/queries/home-page-queries";
 import { cn } from "@/lib/utils";
-import { Minus, Plus, ShoppingCart } from "lucide-react";
-import { FaStar } from "react-icons/fa";
+import { ChevronRight, Headset, Minus, Plus, ShoppingCart } from "lucide-react";
+import Image from "next/image";
+import { FaStar, FaTruck } from "react-icons/fa";
+import { PiCreditCardFill, PiShieldCheckFill } from "react-icons/pi";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
 const ProductPage = async ({ params }: ProductPageProps) => {
-  const slug = (await params).slug;
-
+  const [footerData, slug] = await Promise.all([getFooterData(), params]);
   return (
-    <section className="p-4 pb-10 md:px-30 md:pb-22 md:pt-10">
-      <div className="content space-y-6">
+    <section className="px-10 pb-22 pt-10 customNav:p-4 customNav:pb-10">
+      <div className="content space-y-3 md:space-y-6">
         <BreadCrumbs />
-        <div className="flex flex-col gap-12 md:flex-row">
-          <div className="space-y-4">
-            <div className="bg-tertiaryLight min-h-[37.5rem] max-w-[40.75rem] rounded-lg"></div>
-            <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row md:gap-12 customNav:gap-6">
+          <div className="w-full max-w-full space-y-3 md:max-w-[40.75rem] md:space-y-4">
+            <div className="h-full max-h-[37.5rem] min-h-[21.375rem] w-full rounded-lg bg-tertiaryLight"></div>
+            <div className="grid grid-cols-5 gap-2 md:gap-4">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
                   className={cn(
-                    "bg-tertiaryLight size-[117.6px] rounded-lg",
+                    "aspect-square max-h-[3.75rem] w-full rounded-lg bg-tertiaryLight md:max-h-[7.35rem]",
                     i === 0 && "border border-primaryGreen bg-white",
                   )}
                 ></div>
               ))}
             </div>
           </div>
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="space-y-2">
+          <div className="space-y-4 md:space-y-8">
+            <div className="space-y-3 md:space-y-4">
+              <div className="space-y-1 md:space-y-2">
                 <span className="font-bold uppercase -tracking--1% text-primaryGreen">
                   MIG
                 </span>
@@ -51,10 +53,10 @@ const ProductPage = async ({ params }: ProductPageProps) => {
                       4.8
                     </Description>
                   </div>
-                  <Description className="text-grey text-sm">(400)</Description>
+                  <Description className="text-sm text-grey">(400)</Description>
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1.5 md:space-y-2">
                 <div className="flex items-center gap-2">
                   <Description className="font-semibold text-black">
                     $280.0
@@ -71,18 +73,20 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               </div>
             </div>
             <Separator className="border-primaryBorder" />
-            <div className="space-y-4">
-              <Description className="text-start font-medium">
+            <div className="space-y-3 md:space-y-4">
+              <Description className="text-start text-sm font-medium md:text-base">
                 Options
               </Description>
               <div className="flex items-center gap-3">
-                <div className="shadow-custom flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5">
-                  <span className="font-bold uppercase -tracking--1%">
+                <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
+                  <span className="text-sm font-bold uppercase -tracking--1% md:text-base">
                     36 MIG TORCH a
                   </span>
-                  <span className="font-bold -tracking--1%">$1,999 AUD</span>
+                  <span className="text-sm font-bold -tracking--1% md:text-base">
+                    $1,999 AUD
+                  </span>
                 </div>
-                <div className="shadow-custom flex h-10 w-[7.75rem] shrink-0 items-center justify-between gap-1 rounded-lg border border-primaryBorder p-1">
+                <div className="flex h-10 w-[7.75rem] shrink-0 items-center justify-between gap-1 rounded-lg border border-primaryBorder p-1 shadow-custom">
                   <Button
                     className="size-8 rounded-md border-none bg-secondaryLight shadow-none"
                     variant="outline"
@@ -102,13 +106,15 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               </div>
               {Array.from({ length: 2 }).map((_, i) => (
                 <div key={i} className="flex h-10 items-center gap-3">
-                  <div className="shadow-custom flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5">
-                    <span className="font-bold uppercase -tracking--1%">
+                  <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
+                    <span className="text-sm font-bold uppercase -tracking--1% md:text-base">
                       36 MIG TORCH a
                     </span>
-                    <span className="font-bold -tracking--1%">$1,999 AUD</span>
+                    <span className="text-sm font-bold -tracking--1% md:text-base">
+                      $1,999 AUD
+                    </span>
                   </div>
-                  <Button className="shadow-custom flex h-10 w-[7.75rem] items-center gap-1 rounded-lg bg-primaryGreen px-3.5 text-white">
+                  <Button className="flex h-10 w-[7.75rem] items-center gap-1 rounded-lg bg-primaryGreen px-3.5 text-white shadow-custom">
                     <ShoppingCart size={16} />
                     <span className="text-xs font-bold uppercase -tracking--1%">
                       Add to cart
@@ -118,17 +124,17 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               ))}
             </div>
             <Separator className="border-primaryBorder" />
-            <div className="bg-tertiaryLight space-y-6 rounded-lg p-6">
+            <div className="space-y-5 rounded-lg bg-tertiaryLight p-4 md:space-y-6 md:p-6">
               <div className="space-y-2">
                 <div>
-                  <h5 className="text-3.5xl font-bold -tracking--1%">
+                  <h5 className="text-2xl font-bold -tracking--1% md:text-3.5xl">
                     $1,999 AUD
                   </h5>
                   <div className="flex items-center gap-2">
-                    <Description className="line-through">
+                    <Description className="text-sm line-through md:text-base">
                       $1,999 AUD
                     </Description>
-                    <Description className="text-primaryRed">
+                    <Description className="text-sm text-primaryRed md:text-base">
                       Save 25% or $111
                     </Description>
                   </div>
@@ -144,10 +150,50 @@ const ProductPage = async ({ params }: ProductPageProps) => {
                 </span>
               </Button>
             </div>
+            <div>
+              <div className="flex h-12 w-full items-center gap-3 border-y border-primaryBorder py-3 text-primaryLight md:py-2">
+                <FaTruck size={24} />
+                <Description className="text-sm md:text-base">
+                  Estimated dispatch with 2-days Free Shipping
+                </Description>
+              </div>
+              <div className="flex h-12 w-full items-center gap-3 border-b border-primaryBorder py-3 text-primaryLight md:py-2">
+                <PiShieldCheckFill size={24} />
+                <Description className="text-sm md:text-base">
+                  15-days return policy
+                </Description>
+                <ChevronRight className="ml-auto" size={24} />
+              </div>
+              <div className="flex h-12 w-full items-center gap-3 border-b border-primaryBorder py-3 text-primaryLight md:py-2">
+                <Headset size={24} />
+                <Description className="text-sm md:text-base">
+                  Global support
+                </Description>
+              </div>
+              <div className="flex h-12 w-full items-center gap-3 border-b border-primaryBorder py-3 text-primaryLight md:py-2">
+                <PiCreditCardFill size={24} />
+                <Description className="text-sm md:text-base">
+                  Ways to pay
+                </Description>
+              </div>
+              <div className="flex items-center gap-1.5 py-3 pl-9 md:py-2">
+                {footerData.paymentImages.map((image) => (
+                  <div key={image.id} className="relative h-5 w-8 md:w-7">
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${image.directus_files_id}`}
+                      alt="Logo"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="absolute object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <Faqs />
+      <Faqs className="px-0" />
     </section>
   );
 };
