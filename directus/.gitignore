@@ -18,11 +18,10 @@ database/
 docker-compose.override.yml
 
 # Directus extensions build artifacts
-extensions/**/node_modules/
-extensions/**/.cache
-extensions/**/.temp
-extensions/**/dist
-!extensions/.gitkeep
+extensions/*/node_modules/
+extensions/*/.cache/
+extensions/*/.temp/
+extensions/*/dist/
 
-# Keep extension source code
-!extensions/**/src/
+# Everything else inside the extensions folder
+!extensions/

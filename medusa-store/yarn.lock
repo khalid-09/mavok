@@ -1612,6 +1612,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@directus/sdk@npm:^18.0.3":
+  version: 18.0.3
+  resolution: "@directus/sdk@npm:18.0.3"
+  checksum: 42b7dceff7e78a6989d8e000336dba60ce57387e9035463616ec556ca9d9c464963c8922a2fc59130faff6e1f585da2bde2e5612913da1532dc0fecb4f44e778
+  languageName: node
+  linkType: hard
+
 "@dnd-kit/accessibility@npm:^3.1.1":
   version: 3.1.1
   resolution: "@dnd-kit/accessibility@npm:3.1.1"
@@ -12048,6 +12055,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "medusa-starter-default@workspace:."
   dependencies:
+    "@directus/sdk": "npm:^18.0.3"
     "@medusajs/admin-sdk": "npm:2.2.0"
     "@medusajs/cli": "npm:2.2.0"
     "@medusajs/framework": "npm:2.2.0"
