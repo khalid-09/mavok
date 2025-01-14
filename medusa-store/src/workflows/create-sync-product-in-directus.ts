@@ -9,8 +9,8 @@ import { DIRECTUS_MODULE } from 'src/modules/directus';
 import DirectusModuleService from 'src/modules/directus/service';
 import { useQueryGraphStep } from '@medusajs/medusa/core-flows';
 
-const syncProductToDirectusStep = createStep(
-  'sync-product-to-directus',
+const createProductInDirectusStep = createStep(
+  'sync-create-product-in-directus',
   async ({ product }: { product: Product }, { container }) => {
     const directusModuleService: DirectusModuleService =
       container.resolve(DIRECTUS_MODULE);
@@ -37,8 +37,8 @@ type SyncProductToDirectusInput = {
   id: string;
 }; // input type for the syncProductToDirectus workflow
 
-export const syncProductToDirectusWorkflow = createWorkflow(
-  'sync-product-to-directus',
+export const createProductInDirectusWorkflow = createWorkflow(
+  'sync-create-product-in-directus',
   (input: SyncProductToDirectusInput) => {
     // @ts-ignore
     const { data: products } = useQueryGraphStep({
@@ -52,7 +52,7 @@ export const syncProductToDirectusWorkflow = createWorkflow(
       },
     }); // using the useQueryGraphStep to query the product with the given id passed by the subscriber when the product is created
 
-    syncProductToDirectusStep({
+    createProductInDirectusStep({
       product: products[0],
     }); // calling the syncProductToDirectusStep with the product data from the query
 

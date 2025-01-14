@@ -1,5 +1,5 @@
 import { directus } from "../directus";
-import { createItem, readSingleton } from "@directus/sdk";
+import { readSingleton } from "@directus/sdk";
 import {
   AboutSection,
   FAQs,

@@ -1,11 +1,11 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework';
-import { syncProductToDirectusWorkflow } from 'src/workflows/sync-product-to-directus';
+import { createProductInDirectusWorkflow } from 'src/workflows/create-sync-product-in-directus';
 
 export default async function productCreatedHandler({
   event: { data },
   container,
 }: SubscriberArgs<{ id: string }>) {
-  await syncProductToDirectusWorkflow(container).run({
+  await createProductInDirectusWorkflow(container).run({
     input: {
       id: data.id,
     },

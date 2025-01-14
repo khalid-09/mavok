@@ -73,7 +73,7 @@ class DirectusModuleService {
     try {
       const directusProduct = await this.directusClient.request(
         createItem('accessories', {
-          slug: product.handle,
+          slug: `/${product.handle}`,
           medusaID: product.id,
           productTitle: product.title,
           productDesc: product.description ?? 'No description provided',
