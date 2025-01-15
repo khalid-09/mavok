@@ -1,17 +1,8 @@
 import { defineHook } from '@directus/extensions-sdk';
 import { getMedusaAuthToken } from './lib/auth';
 import { kyInstance } from './lib/ky';
-
-export interface Accessories {
-  id: string;
-  productTitle: string;
-  productDesc: string;
-  slug: string;
-  metadata?: {
-    syncedFrom: 'medusa' | 'directus';
-    syncId: string;
-  }[];
-}
+import { Accessories, directus } from './lib/directus';
+import { updateItem } from '@directus/sdk';
 
 export default defineHook(({ action }, { env }) => {
   const WEBHOOK_SECRET = env.WEBHOOK_SECRET;
@@ -60,10 +51,13 @@ export default defineHook(({ action }, { env }) => {
         })
         .json<{ id: string }>();
 
-      console.log(
-        `Successfully synced product ${response} to Medusa`,
-        response
+      await directus.request(
+        updateItem('accessories', key, {
+          medusaID: response.id,
+        })
       );
+
+      console.log(`Successfully synced product to Medusa : `, response);
     } catch (error) {
       console.log(error);
     }
