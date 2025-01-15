@@ -20,18 +20,9 @@ export interface Accessories {
   productTitle: string;
   productDesc: string;
   slug: string;
-  productImages: {
-    id: number;
-    accessories_id: string;
-    directus_files_id: string;
-  }[];
-  category: {
-    categories_id: {
-      id: number;
-      date_created: string;
-      categoryName: string;
-      categoryImage: string;
-    };
+  metadata: {
+    syncedFrom: 'medusa' | 'directus';
+    syncId: string;
   }[];
 } // Schema for the products in directus.
 
@@ -79,6 +70,12 @@ class DirectusModuleService {
           medusaID: product.id,
           productTitle: product.title,
           productDesc: product.description ?? 'No description provided',
+          metadata: [
+            {
+              syncedFrom: 'medusa',
+              syncId: `medusa_sync_${Date.now()}}`,
+            },
+          ],
         })
       );
       this.logger_.info(
@@ -102,6 +99,13 @@ class DirectusModuleService {
           },
         })
       );
+
+      if (!directusProduct.id) {
+        throw new Error(
+          `Product with MedusaId: ${medusaId} not found in Directus`
+        );
+      }
+
       await this.directusClient.request(
         deleteItem('accessories', directusProduct.id)
       );
@@ -126,7 +130,7 @@ class DirectusModuleService {
         })
       );
 
-      if (!existingDirectusProduct) {
+      if (!existingDirectusProduct.id) {
         throw new Error(`Product with id: ${product.id} not found in Directus`);
       }
 

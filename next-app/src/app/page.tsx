@@ -6,7 +6,7 @@ import { medusa } from "@/lib/medusa";
 
 const Page = () => {
   medusa.store.product.list().then(({ products }) => {
-    console.log(products);
+    console.log(products[2].metadata);
   });
   return (
     <>

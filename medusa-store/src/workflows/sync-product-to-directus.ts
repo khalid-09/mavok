@@ -33,6 +33,7 @@ const syncProductsToDirectusStep = createStep(
     const directusModuleService =
       container.resolve<DirectusModuleService>(DIRECTUS_MODULE); // resolve the DirectusModuleService from the container
     const query = container.resolve('query'); // resolve the DirectusModuleService and query from the container
+    const logger = container.resolve('logger'); // resolve the logger from the container
 
     let syncResult: SyncResult = {
       operation,
@@ -47,7 +48,7 @@ const syncProductsToDirectusStep = createStep(
 
       const { data } = await query.graph({
         entity: 'product',
-        fields: ['id', 'title', 'description', 'handle'],
+        fields: ['id', 'title', 'description', 'handle', 'metadata'],
         filters: {
           id: medusaProductId,
         },
@@ -58,6 +59,11 @@ const syncProductsToDirectusStep = createStep(
       } // throw an error if the product is not found in Medusa
 
       const medusaProduct = data[0]; // get the product from the response
+
+      if (medusaProduct.metadata?.syncedFrom === 'directus') {
+        logger.info('Skipping sync - product originally from Directus');
+        return new StepResponse({ success: true }, syncResult);
+      } // skip the sync if the product is originally from Directus
 
       if (operation === 'created') {
         await directusModuleService.createProductInDirectus(medusaProduct);
@@ -112,7 +118,7 @@ const syncProductsToDirectusStep = createStep(
       logger.error('Failed to rollback Directus sync', error);
     } // compensation function to rollback the product from Directus in case of error
   }
-);
+); // creating a step to sync the product to Directus
 
 export const syncProductsToDirectusWorkflow = createWorkflow(
   {
