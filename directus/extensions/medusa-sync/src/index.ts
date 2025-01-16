@@ -112,7 +112,12 @@ export default defineHook(({ action, filter }, { env }) => {
     const product = payload as Accessories;
     const [key] = keys as string[];
 
-    if (product.metadata && product.metadata[0]?.syncedFrom === 'medusa') {
+    const fullProduct = await directus.request(readItem('accessories', key!));
+
+    if (
+      fullProduct.metadata &&
+      fullProduct.metadata[0]?.syncedFrom === 'medusa'
+    ) {
       console.log(
         `Skipping sync for product ${product.productTitle} - originated from Medusa`
       );
@@ -130,8 +135,6 @@ export default defineHook(({ action, filter }, { env }) => {
       console.log(`Updating product ${product.productTitle} to Medusa`);
 
       const token = await getMedusaAuthToken();
-
-      const fullProduct = await directus.request(readItem('accessories', key!));
 
       const authenticatedKy = kyInstance.extend({
         headers: {
