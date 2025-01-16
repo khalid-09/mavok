@@ -71,13 +71,6 @@ export default defineHook(({ action, filter }, { env }) => {
 
     const product = await directus.request(readItem('accessories', id!));
 
-    if (product.metadata && product.metadata[0]?.syncedFrom === 'medusa') {
-      console.log(
-        `Skipping delete for product ${product.productTitle} - originated from Medusa`
-      );
-      return;
-    }
-
     try {
       console.log(`Deleting product ${product.productTitle} from Medusa`);
 
