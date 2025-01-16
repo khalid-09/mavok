@@ -1,4 +1,3 @@
-// mavok/medusa-store/src/subscribers/product-subscriber.ts
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework';
 import { syncProductsToDirectusWorkflow } from 'src/workflows/sync-product-to-directus';
 
