@@ -23,6 +23,7 @@ export interface Accessories {
   metadata: {
     syncedFrom: 'medusa' | 'directus';
     syncId: string;
+    lastSyncTimestamp: number;
   }[];
 } // Schema for the products in directus.
 
@@ -66,7 +67,7 @@ class DirectusModuleService {
     try {
       await this.directusClient.request(
         createItem('accessories', {
-          slug: `/${product.handle}`,
+          slug: `${product.handle}`,
           medusaID: product.id,
           productTitle: product.title,
           productDesc: product.description ?? 'No description provided',
@@ -74,6 +75,7 @@ class DirectusModuleService {
             {
               syncedFrom: 'medusa',
               syncId: `medusa_sync_${Date.now()}}`,
+              lastSyncTimestamp: Date.now(),
             },
           ],
         })
@@ -131,15 +133,23 @@ class DirectusModuleService {
       );
 
       if (!existingDirectusProduct.id) {
-        throw new Error(`Product with id: ${product.id} not found in Directus`);
+        throw new Error(
+          `Product with medusaId: ${product.id} not found in Directus`
+        );
       }
 
       await this.directusClient.request(
         updateItem('accessories', existingDirectusProduct.id, {
-          slug: `/${product.handle}`,
+          slug: `${product.handle}`,
           medusaID: product.id,
           productTitle: product.title,
           productDesc: product.description ?? 'No description provided',
+          metadata: [
+            {
+              ...(existingDirectusProduct.metadata?.[0] || {}),
+              lastSyncTimestamp: Date.now(),
+            },
+          ],
         })
       );
 

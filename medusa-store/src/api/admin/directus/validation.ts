@@ -13,7 +13,7 @@ export const PostAdminCreateDirectusProduct = z.object({
       syncId: z.string().min(1, 'Synced ID is required'),
     }),
   }),
-});
+}); // Defining the schema for the request body
 
 export type PostAdminCreateDirectusProduct = z.infer<
   typeof PostAdminCreateDirectusProduct
@@ -26,7 +26,7 @@ export const DeleteAdminDirectusProduct = z.object({
   data: z.object({
     id: z.string().min(1, 'ID is required'),
   }),
-});
+}); // Defining the schema for the request body
 
 export type DeleteAdminDirectusProduct = z.infer<
   typeof DeleteAdminDirectusProduct
@@ -46,7 +46,7 @@ export const PatchAdminUpdateDirectusProduct = z.object({
       syncId: z.string().min(1, 'Synced ID is required'),
     }),
   }),
-});
+}); // Defining the schema for the request body
 
 export type PatchAdminUpdateDirectusProduct = z.infer<
   typeof PatchAdminUpdateDirectusProduct

@@ -24,6 +24,8 @@ interface SyncProductToDirectusInput {
   operation: SyncStepInput['operation'];
 } // input types for the workflow passed by the subscriber
 
+const SYNC_THRESHOLD = 7000; // set the syncThreshold to 5 seconds
+
 const syncProductsToDirectusStep = createStep(
   {
     name: 'sync-products-to-directus',
@@ -62,7 +64,7 @@ const syncProductsToDirectusStep = createStep(
       const currentTime = Date.now(); // get the current time
       const lastSyncTime =
         (medusaProduct.metadata?.lastSyncTimestamp as number) || 0; // get the lastSyncTime from the medusaProduct
-      const syncThreshold = 5000; // set the syncThreshold to 5 seconds
+      const syncThreshold = SYNC_THRESHOLD;
 
       if (
         // Skip only if:

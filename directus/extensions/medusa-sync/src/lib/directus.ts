@@ -8,6 +8,7 @@ export interface Accessories {
   metadata?: {
     syncedFrom: 'medusa' | 'directus';
     syncId: string;
+    lastSyncTimestamp: number;
   }[];
   isMedusaIdUpdate: boolean;
   medusaID: string;

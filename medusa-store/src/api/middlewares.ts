@@ -26,4 +26,4 @@ export default defineMiddlewares({
       middlewares: [validateAndTransformBody(PatchAdminUpdateDirectusProduct)],
     },
   ],
-});
+}); // Defining the middlewares for the admin/directus route methods
