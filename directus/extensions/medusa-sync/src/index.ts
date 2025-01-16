@@ -54,6 +54,7 @@ export default defineHook(({ action, filter }, { env }) => {
       await directus.request(
         updateItem('accessories', key, {
           medusaID: response.id,
+          isMedusaIdUpdate: true,
         })
       );
 
@@ -101,6 +102,65 @@ export default defineHook(({ action, filter }, { env }) => {
         .json();
 
       console.log(`Successfully deleted product from Medusa : ${response}`);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  action('items.update', async ({ payload, keys, collection }) => {
+    if (collection !== 'accessories') return;
+    const product = payload as Accessories;
+    const [key] = keys as string[];
+
+    if (product.metadata && product.metadata[0]?.syncedFrom === 'medusa') {
+      console.log(
+        `Skipping sync for product ${product.productTitle} - originated from Medusa`
+      );
+      return;
+    }
+
+    if (product.isMedusaIdUpdate) {
+      console.log(
+        `Skipping UPDATE sync for product ${product.productTitle} - Medusa ID update`
+      );
+      return;
+    }
+
+    try {
+      console.log(`Updating product ${product.productTitle} to Medusa`);
+
+      const token = await getMedusaAuthToken();
+
+      const fullProduct = await directus.request(readItem('accessories', key!));
+
+      const authenticatedKy = kyInstance.extend({
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'x-webhook-secret': WEBHOOK_SECRET,
+        },
+      });
+
+      const response = await authenticatedKy
+        .patch('admin/directus', {
+          json: {
+            event: 'product.update',
+            data: {
+              medusaId: fullProduct.medusaID,
+              title: product.productTitle || fullProduct.productTitle,
+              description: product.productDesc || fullProduct.productDesc,
+              handle:
+                product.slug.replace('/', '') ||
+                fullProduct.slug.replace('/', ''),
+              metadata: {
+                syncedFrom: 'directus',
+                syncId: `directus_sync_${Date.now()}`,
+              },
+            },
+          },
+        })
+        .json();
+
+      console.log(`Successfully synced UPDATE product to Medusa : `, response);
     } catch (error) {
       console.log(error);
     }

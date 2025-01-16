@@ -4,6 +4,7 @@ import {
 } from '@medusajs/framework/http';
 import {
   DeleteAdminDirectusProduct,
+  PatchAdminUpdateDirectusProduct,
   PostAdminCreateDirectusProduct,
 } from './admin/directus/validation';
 
@@ -18,6 +19,11 @@ export default defineMiddlewares({
       matcher: '/admin/directus',
       method: ['DELETE'],
       middlewares: [validateAndTransformBody(DeleteAdminDirectusProduct)],
+    },
+    {
+      matcher: '/admin/directus',
+      method: ['PATCH'],
+      middlewares: [validateAndTransformBody(PatchAdminUpdateDirectusProduct)],
     },
   ],
 });

@@ -31,3 +31,23 @@ export const DeleteAdminDirectusProduct = z.object({
 export type DeleteAdminDirectusProduct = z.infer<
   typeof DeleteAdminDirectusProduct
 >;
+
+export const PatchAdminUpdateDirectusProduct = z.object({
+  event: z.literal('product.update', {
+    required_error: 'Event must be product.create',
+  }),
+  data: z.object({
+    medusaId: z.string().min(1, 'Medusa ID is required'),
+    title: z.string().min(1, 'Title is required'),
+    description: z.string().optional(),
+    handle: z.string().min(1, 'Handle is required'),
+    metadata: z.object({
+      syncedFrom: z.enum(['directus', 'medusa']),
+      syncId: z.string().min(1, 'Synced ID is required'),
+    }),
+  }),
+});
+
+export type PatchAdminUpdateDirectusProduct = z.infer<
+  typeof PatchAdminUpdateDirectusProduct
+>;

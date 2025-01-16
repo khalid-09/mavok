@@ -1,11 +1,13 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http';
 import {
   DeleteAdminDirectusProduct,
+  PatchAdminUpdateDirectusProduct,
   PostAdminCreateDirectusProduct,
 } from './validation';
 import {
   createProductsWorkflow,
   deleteProductsWorkflow,
+  updateProductsWorkflow,
 } from '@medusajs/medusa/core-flows';
 
 export const POST = async (
@@ -119,9 +121,70 @@ export const DELETE = async (
 
     res.status(201).json({ result });
   } catch (error) {
-    console.error('Error creating product:', error);
+    console.error('Error deleting product:', error);
     res.status(500).json({
-      message: 'Error creating product',
+      message: 'Error deleting product',
+      error: error.message,
+    });
+  }
+};
+
+export const PATCH = async (
+  req: MedusaRequest<PatchAdminUpdateDirectusProduct>,
+  res: MedusaResponse
+) => {
+  const logger = req.scope.resolve('logger');
+
+  logger.info('Validating webhook secret');
+
+  const webhookSecret = req.headers['x-webhook-secret'];
+
+  if (!webhookSecret) {
+    return res
+      .status(400)
+      .json({ message: 'Webhook secret header is missing' });
+  }
+
+  if (webhookSecret !== process.env.WEBHOOK_SECRET) {
+    return res.status(401).json({
+      message: 'Unauthorized, WebHook secret did not match',
+    });
+  }
+
+  logger.info('Webhook secret is valid');
+
+  logger.info('Deleting product');
+
+  try {
+    const { data } = req.validatedBody;
+
+    const { result } = await updateProductsWorkflow(req.scope).run({
+      input: {
+        selector: {
+          id: data.medusaId,
+        },
+        update: {
+          title: data.title,
+          description: data.description,
+          handle: data.handle,
+          metadata: {
+            syncedFrom: data.metadata.syncedFrom,
+            syncId: data.metadata.syncId,
+            lastSyncTimestamp: Date.now(),
+          },
+        },
+      },
+    });
+
+    logger.info('Product created Successfully');
+
+    const { id } = result[0];
+
+    res.status(201).json({ id });
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({
+      message: 'Error updating product',
       error: error.message,
     });
   }

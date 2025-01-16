@@ -9,6 +9,7 @@ export interface Accessories {
     syncedFrom: 'medusa' | 'directus';
     syncId: string;
   }[];
+  isMedusaIdUpdate: boolean;
   medusaID: string;
 }
 
