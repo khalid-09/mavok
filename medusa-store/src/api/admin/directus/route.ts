@@ -1,6 +1,12 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http';
-import { PostAdminCreateDirectusProduct } from './validation';
-import { createProductsWorkflow } from '@medusajs/medusa/core-flows';
+import {
+  DeleteAdminDirectusProduct,
+  PostAdminCreateDirectusProduct,
+} from './validation';
+import {
+  createProductsWorkflow,
+  deleteProductsWorkflow,
+} from '@medusajs/medusa/core-flows';
 
 export const POST = async (
   req: MedusaRequest<PostAdminCreateDirectusProduct>,
@@ -41,6 +47,7 @@ export const POST = async (
             metadata: {
               syncedFrom: data.metadata.syncedFrom,
               syncId: data.metadata.syncId,
+              lastSyncTimestamp: Date.now(),
             },
             status: 'published',
             options: [
@@ -64,6 +71,53 @@ export const POST = async (
     const { id } = result[0];
 
     res.status(201).json({ id });
+  } catch (error) {
+    console.error('Error creating product:', error);
+    res.status(500).json({
+      message: 'Error creating product',
+      error: error.message,
+    });
+  }
+};
+
+export const DELETE = async (
+  req: MedusaRequest<DeleteAdminDirectusProduct>,
+  res: MedusaResponse
+) => {
+  const logger = req.scope.resolve('logger');
+
+  logger.info('Validating webhook secret');
+
+  const webhookSecret = req.headers['x-webhook-secret'];
+
+  if (!webhookSecret) {
+    return res
+      .status(400)
+      .json({ message: 'Webhook secret header is missing' });
+  }
+
+  if (webhookSecret !== process.env.WEBHOOK_SECRET) {
+    return res.status(401).json({
+      message: 'Unauthorized, WebHook secret did not match',
+    });
+  }
+
+  logger.info('Webhook secret is valid');
+
+  logger.info('Deleting product');
+
+  try {
+    const { data } = req.validatedBody;
+
+    const { result } = await deleteProductsWorkflow(req.scope).run({
+      input: {
+        ids: [data.id],
+      },
+    });
+
+    logger.info('Product deleted Successfully');
+
+    res.status(201).json({ result });
   } catch (error) {
     console.error('Error creating product:', error);
     res.status(500).json({

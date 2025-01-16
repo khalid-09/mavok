@@ -2,7 +2,10 @@ import {
   defineMiddlewares,
   validateAndTransformBody,
 } from '@medusajs/framework/http';
-import { PostAdminCreateDirectusProduct } from './admin/directus/validation';
+import {
+  DeleteAdminDirectusProduct,
+  PostAdminCreateDirectusProduct,
+} from './admin/directus/validation';
 
 export default defineMiddlewares({
   routes: [
@@ -10,6 +13,11 @@ export default defineMiddlewares({
       matcher: '/admin/directus',
       method: ['POST'],
       middlewares: [validateAndTransformBody(PostAdminCreateDirectusProduct)],
+    },
+    {
+      matcher: '/admin/directus',
+      method: ['DELETE'],
+      middlewares: [validateAndTransformBody(DeleteAdminDirectusProduct)],
     },
   ],
 });

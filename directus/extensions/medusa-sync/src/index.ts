@@ -2,9 +2,9 @@ import { defineHook } from '@directus/extensions-sdk';
 import { getMedusaAuthToken } from './lib/auth';
 import { kyInstance } from './lib/ky';
 import { Accessories, directus } from './lib/directus';
-import { updateItem } from '@directus/sdk';
+import { readItem, updateItem } from '@directus/sdk';
 
-export default defineHook(({ action }, { env }) => {
+export default defineHook(({ action, filter }, { env }) => {
   const WEBHOOK_SECRET = env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
@@ -58,6 +58,49 @@ export default defineHook(({ action }, { env }) => {
       );
 
       console.log(`Successfully synced product to Medusa : `, response);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  filter('items.delete', async (input, { collection }) => {
+    if (collection !== 'accessories') return;
+
+    const [id] = input as string[];
+
+    const product = await directus.request(readItem('accessories', id!));
+
+    if (product.metadata && product.metadata[0]?.syncedFrom === 'medusa') {
+      console.log(
+        `Skipping delete for product ${product.productTitle} - originated from Medusa`
+      );
+      return;
+    }
+
+    try {
+      console.log(`Deleting product ${product.productTitle} from Medusa`);
+
+      const token = await getMedusaAuthToken();
+
+      const authenticatedKy = kyInstance.extend({
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'x-webhook-secret': WEBHOOK_SECRET,
+        },
+      });
+
+      const response = await authenticatedKy
+        .delete(`admin/directus`, {
+          json: {
+            event: 'product.delete',
+            data: {
+              id: product.medusaID,
+            },
+          },
+        })
+        .json();
+
+      console.log(`Successfully deleted product from Medusa : ${response}`);
     } catch (error) {
       console.log(error);
     }

@@ -44,7 +44,7 @@ const syncProductsToDirectusStep = createStep(
       if (operation === 'deleted') {
         await directusModuleService.deleteProductInDirectus(medusaProductId);
         return new StepResponse({ success: true }, syncResult);
-      } // if the operation is deleted, delete the product from Directus and return success Response
+      } // if the operation is 'deleted', delete the product from Directus and return success Response
 
       const { data } = await query.graph({
         entity: 'product',
@@ -59,11 +59,22 @@ const syncProductsToDirectusStep = createStep(
       } // throw an error if the product is not found in Medusa
 
       const medusaProduct = data[0]; // get the product from the response
+      const currentTime = Date.now(); // get the current time
+      const lastSyncTime =
+        (medusaProduct.metadata?.lastSyncTimestamp as number) || 0; // get the lastSyncTime from the medusaProduct
+      const syncThreshold = 5000; // set the syncThreshold to 5 seconds
 
-      if (medusaProduct.metadata?.syncedFrom === 'directus') {
-        logger.info('Skipping sync - product originally from Directus');
+      if (
+        // Skip only if:
+        (operation === 'created' && // 1. It's a create operation AND product originated from Directus
+          medusaProduct.metadata?.syncedFrom === 'directus') ||
+        currentTime - lastSyncTime < syncThreshold // 2. OR if it's too soon after the last sync
+      ) {
+        logger.info(
+          'Skipping sync - product just synced or originated from Directus'
+        );
         return new StepResponse({ success: true }, syncResult);
-      } // skip the sync if the product is originally from Directus
+      }
 
       if (operation === 'created') {
         await directusModuleService.createProductInDirectus(medusaProduct);

@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const PostAdminCreateDirectusProduct = z.object({
-  event: z.enum(['product.create', 'product.update', 'product.delete']),
+  event: z.literal('product.create', {
+    required_error: 'Event must be product.create',
+  }),
   data: z.object({
     title: z.string().min(1, 'Title is required'),
     description: z.string().optional(),
@@ -15,4 +17,17 @@ export const PostAdminCreateDirectusProduct = z.object({
 
 export type PostAdminCreateDirectusProduct = z.infer<
   typeof PostAdminCreateDirectusProduct
+>;
+
+export const DeleteAdminDirectusProduct = z.object({
+  event: z.literal('product.delete', {
+    required_error: 'Event must be product.delete',
+  }),
+  data: z.object({
+    id: z.string().min(1, 'ID is required'),
+  }),
+});
+
+export type DeleteAdminDirectusProduct = z.infer<
+  typeof DeleteAdminDirectusProduct
 >;
