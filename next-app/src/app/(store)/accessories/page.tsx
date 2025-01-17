@@ -1,15 +1,11 @@
-import ProdcutCard from "@/components/accessories-page/product-card";
 import Description from "@/components/description";
 import { Filter } from "lucide-react";
 import Image from "next/image";
 import product from "@/../public/product.png";
-import {
-  getAccessoriesData,
-  getCategoriesData,
-} from "@/lib/queries/accessories-page-queries";
+import { getCategoriesData } from "@/lib/queries/accessories-page-queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SortButton from "@/components/accessories-page/sort-button";
-import { medusa } from "@/lib/medusa";
+import AccessoriesGrid from "@/components/accessories-page/accessories-grid";
 
 interface PageProps {
   searchParams: Promise<{ sort?: string }>;
@@ -96,27 +92,3 @@ const ProductsPage = async ({ searchParams }: PageProps) => {
 };
 
 export default ProductsPage;
-
-const AccessoriesGrid = async ({
-  category,
-  sortOrder,
-}: {
-  category: string;
-  sortOrder: "recommendation" | "a-z";
-}) => {
-  const accessories = await getAccessoriesData(category, sortOrder);
-
-  return (
-    <>
-      {accessories.length === 0 ? (
-        <p>No product found. Start creating some.</p>
-      ) : (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:gap-6">
-          {accessories.map((product, index) => (
-            <ProdcutCard index={index} key={index} product={product} />
-          ))}
-        </div>
-      )}
-    </>
-  );
-};

@@ -7,17 +7,26 @@ import Link from "next/link";
 import { Accessories } from "@/lib/types/accessories";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
+import { getLowestPrice } from "@/lib/utils";
 
 const MotionLink = motion.create(Link);
 const MotionButton = motion.create(Button);
 
+export interface MedusaProducts {
+  id: string;
+  prices: (number | "N/A")[] | undefined;
+}
+
 interface ProductCardProps {
   product: Accessories;
   index: number;
+  medusaProducts: MedusaProducts[];
 }
 
-const ProdcutCard = ({ product, index }: ProductCardProps) => {
+const ProdcutCard = ({ product, index, medusaProducts }: ProductCardProps) => {
   const router = useRouter();
+
+  const lowestPrice = getLowestPrice(medusaProducts, product.medusaID);
 
   return (
     <motion.div
@@ -65,7 +74,7 @@ const ProdcutCard = ({ product, index }: ProductCardProps) => {
               className="text-sm font-bold -tracking--1%"
               whileHover={{ scale: 1.05, originX: 0 }}
             >
-              FROM $1,999.90
+              FROM $${lowestPrice}
             </motion.p>
           </div>
           <MotionButton

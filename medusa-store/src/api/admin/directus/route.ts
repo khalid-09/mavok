@@ -79,11 +79,11 @@ export const POST = async (
                 [optionTitle]: value,
               },
               manage_inventory: false,
-              origin_country: 'US',
+              origin_country: 'England',
               prices: [
                 {
                   amount: value === 'A' ? 1999 : value === 'B' ? 2499 : 2999,
-                  currency_code: 'usd',
+                  currency_code: 'eur',
                 },
               ],
             })),

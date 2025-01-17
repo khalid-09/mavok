@@ -16,6 +16,7 @@ export interface Accessories {
       categoryImage: string;
     };
   }[];
+  medusaID: string;
   "productImages.*": unknown;
   "category.categories_id.*": unknown;
 }

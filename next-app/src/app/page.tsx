@@ -3,7 +3,7 @@ import AboutSection from "@/components/home-page/about-section";
 import HeroSection from "@/components/home-page/hero-section";
 import InsideBoxSection from "@/components/home-page/inisde-box-section";
 
-const Page = async () => {
+const Page = () => {
   return (
     <>
       <HeroSection />

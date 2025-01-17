@@ -1,6 +1,7 @@
-import { readItem, readItems } from "@directus/sdk";
+import { readItems } from "@directus/sdk";
 import { directus } from "../directus";
 import { Accessories, Categories } from "../types/accessories";
+import { medusa } from "../medusa";
 
 export const getAccessoriesData = async (
   categoryName?: string,
@@ -89,5 +90,20 @@ export const getProductData = async (slug: string): Promise<Accessories> => {
       console.log("Error message:", error.message);
     }
     throw new Error(`Failed to fetch product : ${error}}`);
+  }
+};
+
+export const getRegionId = async (): Promise<string> => {
+  try {
+    const { regions } = await medusa.store.region.list();
+    const id = regions[0].id;
+
+    return id;
+  } catch (error) {
+    console.error("Medusa error:", error);
+    if (error instanceof Error) {
+      console.log("Error message:", error.message);
+    }
+    throw new Error("Failed to fetch region id");
   }
 };
