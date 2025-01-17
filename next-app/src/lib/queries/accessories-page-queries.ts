@@ -1,13 +1,6 @@
-import { readItems } from "@directus/sdk";
+import { readItem, readItems } from "@directus/sdk";
 import { directus } from "../directus";
 import { Accessories, Categories } from "../types/accessories";
-
-class AccessoriesError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "AccessoriesError";
-  }
-}
 
 export const getAccessoriesData = async (
   categoryName?: string,
@@ -37,22 +30,16 @@ export const getAccessoriesData = async (
     );
 
     if (!items || items.length === 0) {
-      throw new AccessoriesError(
-        `No accessories found${categoryName ? ` for category: ${categoryName}` : ""}`,
-      );
+      return [];
     }
 
     return items;
-  } catch (error: unknown) {
+  } catch (error) {
     console.error("Directus error:", error);
-
-    if (error instanceof AccessoriesError) {
-      throw error;
+    if (error instanceof Error) {
+      console.log("Error message:", error.message);
     }
-
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
-    throw new AccessoriesError(`Failed to fetch accessories: ${errorMessage}`);
+    throw new Error("Failed to fetch accessories");
   }
 };
 
@@ -65,17 +52,42 @@ export const getCategoriesData = async (): Promise<Categories[]> => {
     );
 
     if (!items || items.length === 0) {
-      throw new AccessoriesError("No categories found");
+      return [];
     }
 
     return items;
   } catch (error: unknown) {
-    if (error instanceof AccessoriesError) {
-      throw error;
+    console.error("Directus error:", error);
+    if (error instanceof Error) {
+      console.log("Error message:", error.message);
+    }
+    throw new Error(`Failed to fetch categories : ${error}}`);
+  }
+};
+
+export const getProductData = async (slug: string): Promise<Accessories> => {
+  try {
+    const [item] = await directus.request(
+      readItems("accessories", {
+        fields: ["*", "productImages.*", "category.categories_id.*"],
+        filter: {
+          slug: {
+            _eq: slug,
+          },
+        },
+      }),
+    );
+
+    if (!item) {
+      throw new Error("Product not found in Directus");
     }
 
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
-    throw new AccessoriesError(`Failed to fetch categories: ${errorMessage}`);
+    return item;
+  } catch (error) {
+    console.error("Directus error:", error);
+    if (error instanceof Error) {
+      console.log("Error message:", error.message);
+    }
+    throw new Error(`Failed to fetch product : ${error}}`);
   }
 };

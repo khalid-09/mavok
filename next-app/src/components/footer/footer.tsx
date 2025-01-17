@@ -5,34 +5,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
 import { ChevronDown, LucideCopyright } from "lucide-react";
-import instaIcon from "@/../public/socials/instaLogo.png";
-import fbIcon from "@/../public/socials/fbLogo.png";
-import tiktokIcon from "@/../public/socials/tiktokLogo.png";
-import youtubeIcon from "@/../public/socials/youtubeLogo.png";
 import Description from "../description";
-
-const socials = [
-  {
-    icon: instaIcon,
-    url: "https://www.instagram.com/",
-    alt: "Instagram Icon",
-  },
-  {
-    icon: fbIcon,
-    url: "https://www.facebook.com/",
-    alt: "Facebook Icon",
-  },
-  {
-    icon: tiktokIcon,
-    url: "https://www.tiktok.com/",
-    alt: "Tiktok Icon",
-  },
-  {
-    icon: youtubeIcon,
-    url: "https://www.youtube.com/",
-    alt: "Youtube Icon",
-  },
-];
 
 /**
  * Footer component

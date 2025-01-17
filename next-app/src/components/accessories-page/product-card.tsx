@@ -52,12 +52,12 @@ const ProdcutCard = ({ product, index }: ProductCardProps) => {
           <div className="space-y-3 md:space-y-4">
             <div className="space-y-1 md:space-y-1.5">
               <motion.p
-                className="text-base font-bold uppercase -tracking--1%"
+                className="line-clamp-1 text-base font-bold uppercase -tracking--1%"
                 whileHover={{ scale: 1.05, originX: 0 }}
               >
                 {product.productTitle}
               </motion.p>
-              <Description className="text-start text-sm leading-[1.125rem] md:leading-5">
+              <Description className="line-clamp-3 text-start text-sm leading-[1.125rem] md:leading-5">
                 {product.productDesc}
               </Description>
             </div>

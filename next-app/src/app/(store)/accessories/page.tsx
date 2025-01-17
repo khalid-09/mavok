@@ -9,6 +9,7 @@ import {
 } from "@/lib/queries/accessories-page-queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SortButton from "@/components/accessories-page/sort-button";
+import { medusa } from "@/lib/medusa";
 
 interface PageProps {
   searchParams: Promise<{ sort?: string }>;
@@ -106,10 +107,16 @@ const AccessoriesGrid = async ({
   const accessories = await getAccessoriesData(category, sortOrder);
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:gap-6">
-      {accessories.map((product, index) => (
-        <ProdcutCard index={index} key={index} product={product} />
-      ))}
-    </div>
+    <>
+      {accessories.length === 0 ? (
+        <p>No product found. Start creating some.</p>
+      ) : (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:gap-6">
+          {accessories.map((product, index) => (
+            <ProdcutCard index={index} key={index} product={product} />
+          ))}
+        </div>
+      )}
+    </>
   );
 };

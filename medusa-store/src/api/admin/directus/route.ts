@@ -39,6 +39,15 @@ export const POST = async (
   try {
     const { data } = req.validatedBody; // Getting the data from the request body after body validation
 
+    const [salesChannel] = await req.scope
+      .resolve('sales_channel')
+      .listSalesChannels(); // Getting the sales channel from the scope
+
+    const { id: salesChannelId } = salesChannel; // Getting the id of the sales channel
+
+    const optionTitle = `${data.title} Options`;
+    const optionValues = ['A', 'B', 'C']; // preparing the options and values for the product
+
     const { result } = await createProductsWorkflow(req.scope).run({
       // Running the createProductsWorkflow with the data from the request body to create the product in Medusa (Directus -> Medusa Sync)
       input: {
@@ -53,17 +62,31 @@ export const POST = async (
               lastSyncTimestamp: Date.now(),
             },
             status: 'published',
+            sales_channels: [
+              {
+                id: salesChannelId,
+              },
+            ],
             options: [
               {
-                title: 'Default Option',
-                values: ['Default option value'],
+                title: optionTitle,
+                values: optionValues,
               },
             ],
-            variants: [
-              {
-                title: 'Default Variant',
+            variants: optionValues.map(value => ({
+              title: `${data.title} ${value}`,
+              options: {
+                [optionTitle]: value,
               },
-            ],
+              manage_inventory: false,
+              origin_country: 'US',
+              prices: [
+                {
+                  amount: value === 'A' ? 1999 : value === 'B' ? 2499 : 2999,
+                  currency_code: 'usd',
+                },
+              ],
+            })),
           },
         ],
       },
