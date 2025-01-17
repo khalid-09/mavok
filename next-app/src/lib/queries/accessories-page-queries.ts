@@ -2,6 +2,7 @@ import { readItems } from "@directus/sdk";
 import { directus } from "../directus";
 import { Accessories, Categories } from "../types/accessories";
 import { medusa } from "../medusa";
+import { cache } from "react";
 
 export const getAccessoriesData = async (
   categoryName?: string,
@@ -93,7 +94,7 @@ export const getProductData = async (slug: string): Promise<Accessories> => {
   }
 };
 
-export const getRegionId = async (): Promise<string> => {
+export const getRegionId = cache(async (): Promise<string> => {
   try {
     const { regions } = await medusa.store.region.list();
     const id = regions[0].id;
@@ -106,4 +107,4 @@ export const getRegionId = async (): Promise<string> => {
     }
     throw new Error("Failed to fetch region id");
   }
-};
+});

@@ -6,33 +6,48 @@ import Image from "next/image";
 import { FaStar, FaTruck } from "react-icons/fa";
 import { PiCreditCardFill, PiShieldCheckFill } from "react-icons/pi";
 import { Separator } from "@/components/ui/separator";
-import BreadCrumbs from "@/components/product-details-page/breadcrumbs";
 import { Accessories } from "@/lib/types/accessories";
 import { Footer } from "@/lib/types/homepage";
 import ProductImages from "./product-images";
+import { getRegionId } from "@/lib/queries/accessories-page-queries";
+import { medusa } from "@/lib/medusa";
+import BreadCrumbs from "./breadcrumbs";
 
 interface ProductDetailsProps {
   product: Accessories;
   footerData: Footer;
 }
 
-const ProductDetails = ({ product, footerData }: ProductDetailsProps) => {
+const ProductDetails = async ({
+  product: directusProduct,
+  footerData,
+}: ProductDetailsProps) => {
+  const id = await getRegionId();
+
+  const { products } = await medusa.store.product.list({
+    id: directusProduct.medusaID,
+    region_id: id,
+    fields: "id,*variants.calculated_price,*variants.title",
+  });
+
+  const productVariants = products[0].variants;
+
   return (
     <section className="px-10 pb-22 pt-10 customNav:p-4 customNav:pb-10">
       <div className="content space-y-3 md:space-y-6">
         <BreadCrumbs
-          category={product.category[0].categories_id.categoryName}
+          category={directusProduct.category[0].categories_id.categoryName}
         />
         <div className="flex flex-col md:flex-row md:gap-12 customNav:gap-6">
-          <ProductImages productImages={product.productImages} />
+          <ProductImages productImages={directusProduct.productImages} />
           <div className="space-y-4 md:space-y-8">
             <div className="space-y-3 md:space-y-4">
               <div className="space-y-1 md:space-y-2">
                 <span className="font-bold uppercase -tracking--1% text-primaryGreen">
-                  {product.category[0].categories_id.categoryName}
+                  {directusProduct.category[0].categories_id.categoryName}
                 </span>
                 <h5 className="text-3.5xl font-bold uppercase -tracking--1% text-black">
-                  {product.productTitle}
+                  {directusProduct.productTitle}
                 </h5>
                 <div className="flex items-center gap-1.5">
                   <div className="flex items-center gap-1">
@@ -56,7 +71,7 @@ const ProductDetails = ({ product, footerData }: ProductDetailsProps) => {
                   </Description>
                 </div>
                 <Description className="text-start text-sm">
-                  {product.productDesc}
+                  {directusProduct.productDesc}
                 </Description>
               </div>
             </div>
@@ -65,41 +80,14 @@ const ProductDetails = ({ product, footerData }: ProductDetailsProps) => {
               <Description className="text-start text-sm font-medium md:text-base">
                 Options
               </Description>
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
-                  <span className="text-sm font-bold uppercase -tracking--1% md:text-base">
-                    36 MIG TORCH a
-                  </span>
-                  <span className="text-sm font-bold -tracking--1% md:text-base">
-                    $1,999 AUD
-                  </span>
-                </div>
-                <div className="flex h-10 w-[7.75rem] shrink-0 items-center justify-between gap-1 rounded-lg border border-primaryBorder p-1 shadow-custom">
-                  <Button
-                    className="size-8 rounded-md border-none bg-secondaryLight shadow-none"
-                    variant="outline"
-                  >
-                    <Minus size={16} />
-                  </Button>
-                  <span className="font-bold tabular-nums -tracking--1%">
-                    2
-                  </span>
-                  <Button
-                    className="size-8 rounded-md border-none bg-primaryGreen text-white shadow-none"
-                    variant="outline"
-                  >
-                    <Plus size={16} />
-                  </Button>
-                </div>
-              </div>
-              {Array.from({ length: 2 }).map((_, i) => (
-                <div key={i} className="flex h-10 items-center gap-3">
+              {productVariants?.map((variant) => (
+                <div key={variant.id} className="flex h-10 items-center gap-3">
                   <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
-                    <span className="text-sm font-bold uppercase -tracking--1% md:text-base">
-                      36 MIG TORCH a
+                    <span className="line-clamp-1 text-sm font-bold uppercase -tracking--1%">
+                      {variant.title}
                     </span>
                     <span className="text-sm font-bold -tracking--1% md:text-base">
-                      $1,999 AUD
+                      ${variant.calculated_price?.original_amount}
                     </span>
                   </div>
                   <Button className="flex h-10 w-[7.75rem] items-center gap-1 rounded-lg bg-primaryGreen px-3.5 text-white shadow-custom">
@@ -186,3 +174,33 @@ const ProductDetails = ({ product, footerData }: ProductDetailsProps) => {
 };
 
 export default ProductDetails;
+
+{
+  /* <div className="flex items-center gap-3">
+                <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
+                  <span className="text-sm font-bold uppercase -tracking--1% md:text-base">
+                    36 MIG TORCH a
+                  </span>
+                  <span className="text-sm font-bold -tracking--1% md:text-base">
+                    $1,999 AUD
+                  </span>
+                </div>
+                <div className="flex h-10 w-[7.75rem] shrink-0 items-center justify-between gap-1 rounded-lg border border-primaryBorder p-1 shadow-custom">
+                  <Button
+                    className="size-8 rounded-md border-none bg-secondaryLight shadow-none"
+                    variant="outline"
+                  >
+                    <Minus size={16} />
+                  </Button>
+                  <span className="font-bold tabular-nums -tracking--1%">
+                    2
+                  </span>
+                  <Button
+                    className="size-8 rounded-md border-none bg-primaryGreen text-white shadow-none"
+                    variant="outline"
+                  >
+                    <Plus size={16} />
+                  </Button>
+                </div>
+              </div> */
+}
