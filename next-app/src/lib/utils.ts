@@ -24,7 +24,14 @@ export const getLowestPrice = (
           (price): price is number => typeof price === "number",
         ),
       )
-    : "N/A";
+    : 0;
 
   return lowestPrice;
+};
+
+export const formatPrice = (amount: number, code?: string): string => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: code || "eur",
+  }).format(amount);
 };

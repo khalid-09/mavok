@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Plus, Minus } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 
 interface CartButtonsProps {
   variant: {
@@ -30,7 +31,7 @@ const CartButtons = ({ variant }: CartButtonsProps) => {
           {variant.title}
         </span>
         <span className="text-sm font-bold -tracking--1% md:text-base">
-          ${variant.price}
+          {formatPrice(variant.price)}
         </span>
       </div>
 

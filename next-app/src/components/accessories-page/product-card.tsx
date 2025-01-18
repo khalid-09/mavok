@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Accessories } from "@/lib/types/accessories";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { getLowestPrice } from "@/lib/utils";
+import { formatPrice, getLowestPrice } from "@/lib/utils";
 
 const MotionLink = motion.create(Link);
 const MotionButton = motion.create(Button);
@@ -74,7 +74,7 @@ const ProdcutCard = ({ product, index, medusaProducts }: ProductCardProps) => {
               className="text-sm font-bold -tracking--1%"
               whileHover={{ scale: 1.05, originX: 0 }}
             >
-              FROM $${lowestPrice}
+              FROM {formatPrice(lowestPrice)}
             </motion.p>
           </div>
           <MotionButton
