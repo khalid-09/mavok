@@ -1,6 +1,7 @@
 import { getFaqData } from "@/lib/queries/home-page-queries";
 import { cn } from "@/lib/utils";
 import Description from "./description";
+import { Box, BoxContent, BoxHeader, BoxTitle } from "./ui/box";
 
 interface FaqsProps {
   shouldBeDark?: boolean;
@@ -23,22 +24,22 @@ const Faqs = async ({ shouldBeDark = false, className }: FaqsProps) => {
         className,
       )}
     >
-      <div className="content space-y-6 md:space-y-16">
-        <div className="space-y-2">
+      <Box className="space-y-6">
+        <BoxHeader className="space-y-2 md:space-y-2">
           <p className="text-sm font-bold uppercase text-primaryGreen md:text-base">
             FAQS
           </p>
-          <h4
+          <BoxTitle
             className={cn(
-              "text-3.5xl font-bold uppercase leading-10 -tracking--1% md:text-4.5xl",
+              "text-start text-3.5xl leading-10 md:text-4.5xl",
               !shouldBeDark && "text-black",
             )}
           >
             frequently asked questions
-          </h4>
-        </div>
+          </BoxTitle>
+        </BoxHeader>
 
-        <div className="grid grid-cols-2 gap-6 md:gap-16 customFooter:grid-cols-1">
+        <BoxContent className="grid grid-cols-2 gap-6 md:gap-16 customFooter:grid-cols-1">
           {content.map((faq, index) => (
             <div key={index} className="space-y-2">
               <h6
@@ -54,8 +55,8 @@ const Faqs = async ({ shouldBeDark = false, className }: FaqsProps) => {
               </Description>
             </div>
           ))}
-        </div>
-      </div>
+        </BoxContent>
+      </Box>
     </section>
   );
 };

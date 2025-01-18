@@ -16,9 +16,19 @@ export interface Accessories {
       categoryImage: string;
     };
   }[];
+  productSupport: {
+    productSupportItems_id: {
+      id: number;
+      featureTitle: string;
+      featureDesc: string;
+      featureImage: string;
+    };
+  }[];
   medusaID: string;
+  productInfo: string;
   "productImages.*": unknown;
   "category.categories_id.*": unknown;
+  "productSupport.productSupportItems_id.*": unknown;
 }
 
 export interface Categories {

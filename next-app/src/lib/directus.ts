@@ -9,7 +9,7 @@ import {
 } from "./types/homepage";
 import { Accessories, Categories } from "./types/accessories";
 
-interface Schema {
+export interface Schema {
   navbar: Navbar;
   hero_section: HeroSection;
   about_section: AboutSection;

@@ -1,6 +1,12 @@
 import { getInsideBoxData } from "@/lib/queries/home-page-queries";
-import Description from "../description";
 import { BentoCard } from "./bento-card";
+import {
+  Box,
+  BoxContent,
+  BoxDescription,
+  BoxHeader,
+  BoxTitle,
+} from "../ui/box";
 
 const InsideBoxSection = async () => {
   const data = await getInsideBoxData();
@@ -46,20 +52,18 @@ const InsideBoxSection = async () => {
 
   return (
     <div className="bg-primaryDark px-4 py-10 text-white md:px-30 md:py-22">
-      <div className="content space-y-8 md:space-y-16">
-        <div className="space-y-3">
+      <Box>
+        <BoxHeader className="md:space-y-3">
           <p className="text-center text-sm font-bold uppercase -tracking--1% text-primaryGreen md:text-base">
             what&apos;s in the box
           </p>
-          <h4 className="text-center text-3.5xl font-bold uppercase -tracking--1% md:text-4.5xl">
-            {data.title}
-          </h4>
-          <Description className="mx-auto max-w-[47.313rem] text-center md:text-lg">
+          <BoxTitle className="text-3.5xl md:text-4.5xl">{data.title}</BoxTitle>
+          <BoxDescription className="mx-auto max-w-[47.313rem] text-center md:text-lg">
             {data.description}
-          </Description>
-        </div>
-        <div className="grid w-full gap-4">{renderBoxes()}</div>
-      </div>
+          </BoxDescription>
+        </BoxHeader>
+        <BoxContent className="grid w-full gap-4">{renderBoxes()}</BoxContent>
+      </Box>
     </div>
   );
 };

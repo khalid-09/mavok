@@ -83,7 +83,7 @@ const ProductDetails = async ({
               {productVariants?.map((variant) => (
                 <div key={variant.id} className="flex h-10 items-center gap-3">
                   <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
-                    <span className="line-clamp-1 text-sm font-bold uppercase -tracking--1%">
+                    <span className="text-smp line-clamp-1 font-bold uppercase -tracking--1%">
                       {variant.title}
                     </span>
                     <span className="text-sm font-bold -tracking--1% md:text-base">

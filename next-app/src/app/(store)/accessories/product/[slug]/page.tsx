@@ -11,6 +11,13 @@ interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
+/**
+ * Product page component
+ * @param {ProductPageProps} props - product page props
+ * @returns {JSX.Element} - product page component
+ * shows product details, pictures, features and faqs
+ */
+
 const ProductPage = async ({ params }: ProductPageProps) => {
   const [footerData, param] = await Promise.all([getFooterData(), params]);
 
@@ -20,7 +27,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     <>
       <ProductDetails product={product} footerData={footerData} />
       <ProductPictures product={product} />
-      <ProductFeatures />
+      <ProductFeatures product={product} />
       <Faqs />
     </>
   );

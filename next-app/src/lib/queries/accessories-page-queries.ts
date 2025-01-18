@@ -71,7 +71,12 @@ export const getProductData = async (slug: string): Promise<Accessories> => {
   try {
     const [item] = await directus.request(
       readItems("accessories", {
-        fields: ["*", "productImages.*", "category.categories_id.*"],
+        fields: [
+          "*",
+          "productImages.*",
+          "category.categories_id.*",
+          "productSupport.productSupportItems_id.*",
+        ],
         filter: {
           slug: {
             _eq: slug,
