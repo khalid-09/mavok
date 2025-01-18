@@ -1,12 +1,6 @@
-import {
-  AlignJustify,
-  CircleUserRound,
-  Search,
-  ShoppingCart,
-} from "lucide-react";
+import { CircleUserRound, Search, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./ui/button";
 import { Navbar as NavbarType } from "@/lib/types/homepage";
 import { cn } from "@/lib/utils";
 import MobileNav from "./mobiel-nav";
@@ -33,6 +27,7 @@ const Navbar = async ({
       )}
     >
       <div className="flex items-center gap-10">
+        {/* LOGO */}
         <Link href="/">
           <Image
             src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${logo}.svg`}
@@ -50,6 +45,7 @@ const Navbar = async ({
           )}
         />
 
+        {/* NAV LINKS */}
         <nav className="block customNav:hidden">
           <ul className="flex items-center gap-6">
             {navLinks.map((link, index) => (
@@ -64,6 +60,7 @@ const Navbar = async ({
         </nav>
       </div>
 
+      {/* ICONS */}
       <div className="flex items-center gap-3">
         <div className="p-2">
           <Search size={24} />
@@ -77,6 +74,8 @@ const Navbar = async ({
             2
           </span>
         </Link>
+
+        {/* MOBILE NAV  */}
         <MobileNav />
       </div>
     </header>

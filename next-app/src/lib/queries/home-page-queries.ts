@@ -90,4 +90,4 @@ export const getFooterData = async (): Promise<Footer> => {
   }
 
   return item;
-};
+}; // Fn to fetch Footer data which is a singleton collection

@@ -14,5 +14,8 @@ const StoreLayout = async ({
     </>
   );
 };
+{
+  /* LAYOUT FOR ALL THE MAIN PAGES */
+}
 
 export default StoreLayout;

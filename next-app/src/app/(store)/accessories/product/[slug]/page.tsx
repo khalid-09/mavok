@@ -20,9 +20,9 @@ interface ProductPageProps {
  */
 
 const ProductPage = async ({ params }: ProductPageProps) => {
-  const [footerData, param] = await Promise.all([getFooterData(), params]);
+  const [footerData, param] = await Promise.all([getFooterData(), params]); // fetch footer data (for ways to pay images) and product slug
 
-  const product = await getProductData(param.slug);
+  const product = await getProductData(param.slug); // fetch product data from the slug
 
   return (
     <>

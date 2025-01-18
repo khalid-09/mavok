@@ -12,6 +12,11 @@ import { getNavBarData } from "@/lib/queries/home-page-queries";
 import Image from "next/image";
 import Link from "next/link";
 
+/**
+ * MobileNav component
+ * returns the mobile navigation panel with the data for navLinks taken from the getNavBarData function
+ */
+
 const MobileNav = async () => {
   const navbar = await getNavBarData();
 

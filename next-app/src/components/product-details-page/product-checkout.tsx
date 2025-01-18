@@ -11,10 +11,15 @@ interface ProductCheckoutProps {
   footerData: Footer;
 }
 
+/**
+ * Product checkout component
+ * @param {footerData} props - footer data for payment images
+ * shows product checkout details
+ */
+
 const ProductCheckout = ({ footerData }: ProductCheckoutProps) => {
   return (
     <>
-      {" "}
       <div className="space-y-5 rounded-lg bg-tertiaryLight p-4 md:space-y-6 md:p-6">
         <div className="space-y-2">
           <div>
@@ -67,6 +72,8 @@ const ProductCheckout = ({ footerData }: ProductCheckoutProps) => {
             Ways to pay
           </Description>
         </div>
+
+        {/* USING THE IMAGES FROM FOOTER DATA */}
         <div className="flex items-center gap-1.5 py-3 pl-9 md:py-2">
           {footerData.paymentImages.map((image) => (
             <div key={image.id} className="relative h-5 w-8 md:w-7">

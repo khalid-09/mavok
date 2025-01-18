@@ -27,11 +27,11 @@ export const getLowestPrice = (
     : 0;
 
   return lowestPrice;
-};
+}; // Fn to get the lowest price of a product variants from the Medusa API
 
 export const formatPrice = (amount: number, code?: string): string => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: code || "eur",
   }).format(amount);
-};
+}; // Fn to format the price in the currency format

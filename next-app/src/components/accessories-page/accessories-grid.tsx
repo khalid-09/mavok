@@ -5,6 +5,13 @@ import {
 } from "@/lib/queries/accessories-page-queries";
 import ProdcutCard from "./product-card";
 
+/**
+ * The grid component for the accessories page.
+ * @param category The category of the accessories.
+ * @param sortOrder The sort order of the accessories.
+ * @returns The grid of product cards.
+ */
+
 const AccessoriesGrid = async ({
   category,
   sortOrder,
@@ -15,19 +22,19 @@ const AccessoriesGrid = async ({
   const [accessories, id] = await Promise.all([
     getAccessoriesData(category, sortOrder),
     getRegionId(),
-  ]);
+  ]); // getting the products(accessories) from directus and region id from medusa (req to get price of a product variant in meudsa)
 
   const { products } = await medusa.store.product.list({
     region_id: id,
     fields: "id,*variants.calculated_price",
-  });
+  }); // getting the products from medusa
 
   const formattedProducts = products.map((product) => ({
     id: product.id,
     prices: product.variants?.map(
       (variant) => variant.calculated_price?.original_amount || "N/A",
     ),
-  }));
+  })); // formatting the products to get the prices of the product variants
 
   return (
     <>
@@ -45,6 +52,7 @@ const AccessoriesGrid = async ({
           ))}
         </div>
       )}
+      {/* rendering the product cards */}
     </>
   );
 };

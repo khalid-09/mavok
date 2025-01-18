@@ -12,17 +12,24 @@ interface CartButtonsProps {
   };
 }
 
+/**
+ * Cart buttons component
+ * @param {variant} props - variant data of the product from medusa store
+ * @returns {JSX.Element} - cart buttons component
+ * shows the cart buttons
+ */
+
 const CartButtons = ({ variant }: CartButtonsProps) => {
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(0); // set the quantity of the product
 
   const handleAddToCart = () => {
     setQuantity(1);
-  };
+  }; // add the product to the cart
 
   const updateQuantity = (delta: number) => {
     const newQuantity = Math.max(0, quantity + delta);
     setQuantity(newQuantity);
-  };
+  }; // update the quantity of the product
 
   return (
     <div className="flex h-10 items-center gap-3">
@@ -31,11 +38,13 @@ const CartButtons = ({ variant }: CartButtonsProps) => {
           {variant.title}
         </span>
         <span className="text-sm font-bold -tracking--1% md:text-base">
-          {formatPrice(variant.price)}
+          {formatPrice(variant.price)}{" "}
+          {/** format the price according to country code */}
         </span>
       </div>
 
       {quantity === 0 ? (
+        // if quantity is 0, show add to cart button
         <Button
           onClick={handleAddToCart}
           className="flex h-10 w-[7.75rem] items-center gap-1 rounded-lg bg-primaryGreen px-3.5 text-white shadow-custom"
@@ -46,6 +55,7 @@ const CartButtons = ({ variant }: CartButtonsProps) => {
           </span>
         </Button>
       ) : (
+        // if quantity is not 0, show increase and decrease buttons
         <div className="flex h-10 w-[7.75rem] shrink-0 items-center justify-between gap-1 rounded-lg border border-primaryBorder p-1 shadow-custom">
           <Button
             onClick={() => updateQuantity(-1)}

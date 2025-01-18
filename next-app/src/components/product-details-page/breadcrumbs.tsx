@@ -15,9 +15,16 @@ interface BreadCrumbsProps {
   category: string;
 }
 
+/**
+ * Breadcrumbs component
+ * @param {category} props - category
+ * @returns {JSX.Element} - breadcrumbs component
+ * shows the navigation flow in breadcrumbs
+ */
+
 const BreadCrumbs = ({ category }: BreadCrumbsProps) => {
-  const pathname = usePathname();
-  const [collection, , productName] = pathname.split("/").slice(1);
+  const pathname = usePathname(); // get the current pathname
+  const [collection, , productName] = pathname.split("/").slice(1); // get the collection and product name from the url path
 
   return (
     <Breadcrumb>

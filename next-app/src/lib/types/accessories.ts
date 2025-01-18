@@ -36,6 +36,8 @@ export interface Accessories {
   }[];
   medusaID: string;
   productInfo: string;
+
+  // The following fields are not present in the original data but are added to avoid type error as directus sdk donsen't let us query for fields other then * and the keys of the defined type
   "productImages.*": unknown;
   "category.categories_id.*": unknown;
   "productSupport.productSupportItems_id.*": unknown;

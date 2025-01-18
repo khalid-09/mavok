@@ -15,3 +15,5 @@ const Page = () => {
 };
 
 export default Page;
+
+// Landing Page

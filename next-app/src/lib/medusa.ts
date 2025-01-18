@@ -11,3 +11,4 @@ export const medusa = new Medusa({
   debug: process.env.NODE_ENV === "development",
   publishableKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
 });
+// This file is used to initialize the Medusa SDK with the backend URL and the publishable key from MEDUSA DASHBOARD.

@@ -11,18 +11,24 @@ interface PageProps {
   searchParams: Promise<{ sort?: string }>;
 }
 
+/**
+ * The page component for the accessories page.
+ * @param searchParams The search parameters used for sorting by storing the sort value in URL.
+ */
+
 const ProductsPage = async ({ searchParams }: PageProps) => {
   const [categories, params] = await Promise.all([
     getCategoriesData(),
     searchParams,
-  ]);
+  ]); // getting the categories and search parameters
 
-  const sortOrder = params?.sort === "a-z" ? "a-z" : "recommendation";
+  const sortOrder = params?.sort === "a-z" ? "a-z" : "recommendation"; // setting the sort order
 
   return (
     <Tabs defaultValue="all" className="w-full">
       <TabsList className="flex items-center justify-center rounded-none border-b border-primaryBorder p-4 sm:px-30 sm:py-4">
         <div className="flex items-center gap-3 sm:gap-4">
+          {/* TABS TRIGGER TO FILTER PRODUCTS BY CATEGORY */}
           <TabsTrigger
             value="all"
             className="flex h-[9.25rem] w-[6.625rem] flex-col justify-between rounded-lg px-3 pb-[1.125rem] pt-3.5 sm:w-[7.75rem]"
@@ -60,6 +66,8 @@ const ProductsPage = async ({ searchParams }: PageProps) => {
           ))}
         </div>
       </TabsList>
+
+      {/* PRODUCT SORTING SECTION */}
       <div className="bg-secondaryLight p-4 pb-10 xl:px-30 xl:py-16">
         <div className="content space-y-4 md:space-y-6">
           <div className="flex w-full items-center justify-between">
@@ -74,6 +82,8 @@ const ProductsPage = async ({ searchParams }: PageProps) => {
               <SortButton currentSort={sortOrder} />
             </div>
           </div>
+
+          {/* REDERING THE FILTERED AND SORTED CONTENT IN PRODUCT CARD INSIDE ACCESSORIESGRID */}
           <TabsContent value="all">
             <AccessoriesGrid category="all" sortOrder={sortOrder} />
           </TabsContent>

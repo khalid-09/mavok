@@ -14,9 +14,14 @@ interface SortButtonProps {
   currentSort: "recommendation" | "a-z";
 }
 
+/**
+ * The sort button component for the accessories page.
+ * @param currentSort The current sort value.
+ */
+
 const SortButton = ({ currentSort }: SortButtonProps) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const router = useRouter(); // getting the router
+  const searchParams = useSearchParams(); // getting the search parameters
 
   const createQueryString = (sort: string) => {
     const params = new URLSearchParams(searchParams);
@@ -24,14 +29,14 @@ const SortButton = ({ currentSort }: SortButtonProps) => {
       params.delete("sort");
     } else {
       params.set("sort", sort);
-    }
+    } // setting the sort value in the URL when user selects a sort option
     return params.toString();
-  };
+  }; // creating the query string
 
   const handleSort = (sort: "recommendation" | "a-z") => {
     const queryString = createQueryString(sort);
     router.push(`?${queryString}`);
-  };
+  }; // handling the sort
 
   return (
     <DropdownMenu>
@@ -63,7 +68,7 @@ const SortButton = ({ currentSort }: SortButtonProps) => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  ); // DROPDOWN MENU FOR SORTING DISPLAYING THE SORT OPTIONS
 };
 
 export default SortButton;

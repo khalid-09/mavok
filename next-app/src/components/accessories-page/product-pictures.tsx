@@ -14,7 +14,7 @@ interface ProductPicturesProps {
 
 /**
  * ProductPictures component
- * @param {Accessories} product - product data
+ * @param {Accessories} product - product data from directus
  * Shows the product pictures
  */
 
@@ -22,6 +22,7 @@ const ProductPictures = ({ product }: ProductPicturesProps) => {
   return (
     <section className="bg-secondaryLight px-4 py-10 md:px-30 md:py-22">
       <Box>
+        {/* DISPLAYING PRODCUT CATEGORY, TITLE AND DESCRIPTION */}
         <BoxHeader className="space-y-1.5 md:space-y-2">
           <p className="text-center font-bold uppercase -tracking--1% text-primaryGreen">
             {product.category[0].categories_id.categoryName}
@@ -33,6 +34,8 @@ const ProductPictures = ({ product }: ProductPicturesProps) => {
             {product.productDesc}
           </BoxDescription>
         </BoxHeader>
+
+        {/* DISPLAYIG IMAGE PLACEHOLDERS */}
         <BoxContent className="grid w-full grid-cols-2 grid-rows-1 gap-4 md:grid-rows-2">
           <div className="col-span-2 flex aspect-[16/9] min-h-[21.438rem] w-full items-center justify-center rounded-md bg-white sm:aspect-auto sm:h-[35rem]">
             <FaRegImage size={26} className="text-lightLight" />

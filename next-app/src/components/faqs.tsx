@@ -39,6 +39,7 @@ const Faqs = async ({ shouldBeDark = false, className }: FaqsProps) => {
           </BoxTitle>
         </BoxHeader>
 
+        {/* FAQ CONTENT  */}
         <BoxContent className="grid grid-cols-2 gap-6 md:gap-16 customFooter:grid-cols-1">
           {content.map((faq, index) => (
             <div key={index} className="space-y-2">

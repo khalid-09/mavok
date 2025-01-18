@@ -9,12 +9,19 @@ interface ProductImagesProps {
   productImages: Accessories["productImages"];
 }
 
+/**
+ * Product image component
+ * @param {productImages} props - product images data of the product from directus
+ * shows product images
+ */
+
 const ProductImage = ({ productImages }: ProductImagesProps) => {
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0); // set the selected image index to 0
 
   return (
     <div className="w-full max-w-full space-y-3 md:max-w-[40.75rem] md:space-y-4">
       <div className="relative h-full max-h-[37.5rem] min-h-[21.375rem] w-full overflow-hidden rounded-lg bg-tertiaryLight">
+        {/* RENDERING THE SELECTED IMAGE */}
         <Image
           src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${productImages[selectedImageIndex].directus_files_id}`}
           alt="Product Image"
@@ -22,6 +29,8 @@ const ProductImage = ({ productImages }: ProductImagesProps) => {
           className="absolute object-cover"
         />
       </div>
+
+      {/* RENDERING THE PRODUCT IMAGES */}
       <div className="grid grid-cols-5 gap-2 md:gap-4">
         {productImages.slice(0, 5).map((image, i) => (
           <div

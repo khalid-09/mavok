@@ -10,6 +10,7 @@ export const getAccessoriesData = async (
 ): Promise<Accessories[]> => {
   let filter = {};
 
+  // set filter if category is not "all"
   if (categoryName && categoryName.toLowerCase() !== "all") {
     filter = {
       category: {
@@ -20,7 +21,7 @@ export const getAccessoriesData = async (
         },
       },
     };
-  }
+  } // else no filter
 
   try {
     const items = await directus.request(
@@ -33,7 +34,7 @@ export const getAccessoriesData = async (
 
     if (!items || items.length === 0) {
       return [];
-    }
+    } // return empty array if no items
 
     return items;
   } catch (error) {
@@ -51,11 +52,11 @@ export const getCategoriesData = async (): Promise<Categories[]> => {
       readItems("categories", {
         fields: ["*"],
       }),
-    );
+    ); // fetch all categories
 
     if (!items || items.length === 0) {
       return [];
-    }
+    } // return empty array if no items
 
     return items;
   } catch (error: unknown) {
@@ -84,11 +85,11 @@ export const getProductData = async (slug: string): Promise<Accessories> => {
           },
         },
       }),
-    );
+    ); // fetch product by slug
 
     if (!item) {
       throw new Error("Product not found in Directus");
-    }
+    } // throw error if no item found
 
     return item;
   } catch (error) {
@@ -102,8 +103,8 @@ export const getProductData = async (slug: string): Promise<Accessories> => {
 
 export const getRegionId = cache(async (): Promise<string> => {
   try {
-    const { regions } = await medusa.store.region.list();
-    const id = regions[0].id;
+    const { regions } = await medusa.store.region.list(); // fetch regions from Medusa Store using medusa SDK
+    const id = regions[0].id; // get first region id / default region id
 
     return id;
   } catch (error) {
@@ -113,4 +114,4 @@ export const getRegionId = cache(async (): Promise<string> => {
     }
     throw new Error("Failed to fetch region id");
   }
-});
+}); // fetch region id from Medusa Store

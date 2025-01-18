@@ -23,10 +23,18 @@ interface ProductCardProps {
   medusaProducts: MedusaProducts[];
 }
 
+/**
+ * The product card component for the accessories page.
+ * @param product The product data from directus.
+ * @param index The index of the product in the grid.
+ * @param medusaProducts The products from medusa.
+ * @returns The product card component.
+ */
+
 const ProdcutCard = ({ product, index, medusaProducts }: ProductCardProps) => {
   const router = useRouter();
 
-  const lowestPrice = getLowestPrice(medusaProducts, product.medusaID);
+  const lowestPrice = getLowestPrice(medusaProducts, product.medusaID); // getting the lowest price of the product variants from medusa
 
   return (
     <motion.div
@@ -50,6 +58,7 @@ const ProdcutCard = ({ product, index, medusaProducts }: ProductCardProps) => {
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
         >
+          {/* IMAGE OF THE PRODUCT */}
           <Image
             src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${product.productImages[0].directus_files_id}`}
             alt={`${product.productTitle} Image`}
@@ -60,16 +69,21 @@ const ProdcutCard = ({ product, index, medusaProducts }: ProductCardProps) => {
         <div className="space-y-[1.125rem] p-3 md:space-y-5 md:p-6">
           <div className="space-y-3 md:space-y-4">
             <div className="space-y-1 md:space-y-1.5">
+              {/* TITLE OF THE PRODUCT  */}
               <motion.p
                 className="line-clamp-1 text-base font-bold uppercase -tracking--1%"
                 whileHover={{ scale: 1.05, originX: 0 }}
               >
                 {product.productTitle}
               </motion.p>
+
+              {/* DESCRIPTION OF THE PRODUCT */}
               <Description className="line-clamp-3 text-start text-sm leading-[1.125rem] md:leading-5">
                 {product.productDesc}
               </Description>
             </div>
+
+            {/* PRICE OF THE PRODUCT - showing the price of the variant which has the lowset price*/}
             <motion.p
               className="text-sm font-bold -tracking--1%"
               whileHover={{ scale: 1.05, originX: 0 }}
@@ -77,6 +91,7 @@ const ProdcutCard = ({ product, index, medusaProducts }: ProductCardProps) => {
               FROM {formatPrice(lowestPrice)}
             </motion.p>
           </div>
+          {/* ADD TO CART BUTTON */}
           <MotionButton
             onClick={(e) => {
               e.preventDefault();
