@@ -24,11 +24,22 @@ export interface Accessories {
       featureImage: string;
     };
   }[];
+  productSpecs: {
+    productSpecItems_id: {
+      id: number;
+      specTitle: string;
+      specs: {
+        label: string;
+        value: string;
+      }[];
+    };
+  }[];
   medusaID: string;
   productInfo: string;
   "productImages.*": unknown;
   "category.categories_id.*": unknown;
   "productSupport.productSupportItems_id.*": unknown;
+  "productSpecs.productSpecItems_id.*": unknown;
 }
 
 export interface Categories {

@@ -3,6 +3,7 @@ import ProductPictures from "@/components/accessories-page/product-pictures";
 import Faqs from "@/components/faqs";
 import ProductDetails from "@/components/product-details-page/product-details";
 import ProductFeatures from "@/components/product-details-page/product-features";
+import ProductSpecifications from "@/components/product-details-page/product-specifications";
 
 import { getProductData } from "@/lib/queries/accessories-page-queries";
 import { getFooterData } from "@/lib/queries/home-page-queries";
@@ -28,6 +29,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       <ProductDetails product={product} footerData={footerData} />
       <ProductPictures product={product} />
       <ProductFeatures product={product} />
+      <ProductSpecifications product={product} />
       <Faqs />
     </>
   );

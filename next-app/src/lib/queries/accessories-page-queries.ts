@@ -76,6 +76,7 @@ export const getProductData = async (slug: string): Promise<Accessories> => {
           "productImages.*",
           "category.categories_id.*",
           "productSupport.productSupportItems_id.*",
+          "productSpecs.productSpecItems_id.*",
         ],
         filter: {
           slug: {
