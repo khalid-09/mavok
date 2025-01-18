@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Navbar as NavbarType } from "@/lib/types/homepage";
 import { cn } from "@/lib/utils";
+import MobileNav from "./mobiel-nav";
 
 /**
  * Navbar component
@@ -76,12 +77,7 @@ const Navbar = async ({
             2
           </span>
         </Link>
-        <Button
-          className="hidden size-10 items-center justify-center p-0 customNav:flex"
-          variant="ghost"
-        >
-          <AlignJustify className="shrink-0" size={24} />
-        </Button>
+        <MobileNav />
       </div>
     </header>
   );
