@@ -14,7 +14,7 @@ const InsideBoxSection = async () => {
   const renderBoxes = () => {
     const boxes = data.content.map((item, index) => (
       <BentoCard key={index} text={item.text} index={index} />
-    ));
+    )); // Map through the content for each box
 
     const rows = [];
 
@@ -23,17 +23,18 @@ const InsideBoxSection = async () => {
         key="first-row"
         className="flex w-full flex-row gap-3 md:gap-4 customNav:flex-col"
       >
+        {/* This will render the first box which is bigger than the rest */}
         <BentoCard
           text={data.content[0].text}
           className="max-w-[37rem] md:h-[37.5rem] customNav:max-w-full"
           index={0}
         />
-
+        {/* Rest of the boxes in the first row */}
         <div className="grid w-full grid-cols-2 gap-3 md:gap-4">
           {boxes.slice(1, 5)}
         </div>
       </div>,
-    );
+    ); // Fn to render the first row of boxes
 
     const remainingBoxes = boxes.slice(5);
     if (remainingBoxes.length > 0) {
@@ -45,10 +46,10 @@ const InsideBoxSection = async () => {
           {remainingBoxes}
         </div>,
       );
-    }
+    } // renders the remaining boxes in the 3 boxes per row format
 
     return rows;
-  };
+  }; // Fn to render the boxes
 
   return (
     <div className="bg-primaryDark px-4 py-10 text-white md:px-30 md:py-22">

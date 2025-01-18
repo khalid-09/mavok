@@ -9,6 +9,8 @@ interface BentoCardProps {
   index: number;
 }
 
+// SIMPLE BOX COMPONENT WITH MOTION ANIMATIONS
+
 export const BentoCard = ({ text, className = "", index }: BentoCardProps) => {
   return (
     <motion.div
