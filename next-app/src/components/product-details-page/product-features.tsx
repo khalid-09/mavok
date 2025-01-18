@@ -27,7 +27,7 @@ const ProductFeatures = ({ product }: ProductFeaturesProps) => {
             {product.productTitle}
           </BoxTitle>
           <BoxDescription className="mx-auto max-w-[55.5rem] whitespace-pre-line">
-            {product.productInfo}
+            {product.productInfo || product.productDesc}
           </BoxDescription>
         </BoxHeader>
 

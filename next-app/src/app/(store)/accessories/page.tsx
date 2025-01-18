@@ -6,10 +6,16 @@ import { getCategoriesData } from "@/lib/queries/accessories-page-queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SortButton from "@/components/accessories-page/sort-button";
 import AccessoriesGrid from "@/components/accessories-page/accessories-grid";
+import { Metadata } from "next";
 
 interface PageProps {
   searchParams: Promise<{ sort?: string }>;
 }
+
+export const metadata: Metadata = {
+  title: "Accessories | Store Page",
+  description: "Buy products.",
+};
 
 /**
  * The page component for the accessories page.

@@ -1,5 +1,5 @@
 import { PiCreditCardFill, PiShieldCheckFill } from "react-icons/pi";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { ChevronRight, Headset, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Description from "../description";
@@ -9,6 +9,12 @@ import { Footer } from "@/lib/types/homepage";
 
 interface ProductCheckoutProps {
   footerData: Footer;
+  variants:
+    | {
+        title: string | null;
+        price: number;
+      }[]
+    | undefined;
 }
 
 /**
@@ -17,14 +23,17 @@ interface ProductCheckoutProps {
  * shows product checkout details
  */
 
-const ProductCheckout = ({ footerData }: ProductCheckoutProps) => {
+const ProductCheckout = ({ footerData, variants }: ProductCheckoutProps) => {
+  const prices = variants?.map((variant) => variant.price);
+  const lowestPrice = Math.min(...prices!);
+
   return (
     <>
       <div className="space-y-5 rounded-lg bg-tertiaryLight p-4 md:space-y-6 md:p-6">
         <div className="space-y-2">
           <div>
             <h5 className="text-2xl font-bold -tracking--1% md:text-3.5xl">
-              $1,999 AUD
+              {formatPrice(lowestPrice, "eur")}
             </h5>
             <div className="flex items-center gap-2">
               <Description className="text-sm line-through md:text-base">

@@ -106,7 +106,7 @@ const ProductDetails = async ({
             <Separator className="border-primaryBorder" />
 
             {/*  ADDITIONAL INFORMATION OF THE PRODUCT  */}
-            <ProductCheckout footerData={footerData} />
+            <ProductCheckout variants={variants} footerData={footerData} />
           </div>
         </div>
       </div>
