@@ -20,7 +20,7 @@ const Description = ({
   return (
     <p
       className={cn(
-        `${roboto.className} text-center text-base text-primaryLight antialiased`,
+        `${roboto.className} text-center text-primaryLight antialiased`,
         className,
       )}
     >

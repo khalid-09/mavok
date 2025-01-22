@@ -99,7 +99,7 @@ const ProductDetails = async ({
                 Options
               </Description>
               {variants?.map((variant, i) => (
-                <CartButtons key={i} variant={variant} />
+                <CartButtons showAddToCart={true} key={i} variant={variant} />
               ))}
             </div>
 
