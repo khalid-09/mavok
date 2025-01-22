@@ -8,7 +8,10 @@ import { getRegionId } from "@/lib/queries/accessories-page-queries";
 import { medusa } from "@/lib/medusa";
 import BreadCrumbs from "./breadcrumbs";
 import ProductCheckout from "./product-checkout";
-import CartButtons from "./cart-buttons";
+import { formatPrice } from "@/lib/utils";
+import IncreaseDescreaseButtons from "./increase-decrease-buttons";
+import { Fragment } from "react";
+import CartStateWrapper from "../cart-page/cart-state-wrapper";
 
 interface ProductDetailsProps {
   product: Accessories;
@@ -34,7 +37,10 @@ const ProductDetails = async ({
     region_id: id,
     fields: "id,*variants.calculated_price,*variants.title",
   }); // fetch product data from the medusa store using the region id for calculated price
-  const variants = products[0].variants?.map((variant) => ({
+
+  const [product] = products;
+
+  const variants = product.variants?.map((variant) => ({
     title: variant.title,
     price: variant.calculated_price?.original_amount || 0,
   })); // map the variants to get the title and price
@@ -99,7 +105,29 @@ const ProductDetails = async ({
                 Options
               </Description>
               {variants?.map((variant, i) => (
-                <CartButtons showAddToCart={true} key={i} variant={variant} />
+                <Fragment key={i}>
+                  <div className="flex h-10 items-center gap-3">
+                    <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
+                      <span className="line-clamp-1 text-sm font-bold uppercase -tracking--1%">
+                        {variant.title}
+                      </span>
+                      <span className="text-sm font-bold -tracking--1% md:text-base">
+                        {formatPrice(variant.price)}{" "}
+                        {/** format the price according to country code */}
+                      </span>
+                    </div>
+
+                    <CartStateWrapper>
+                      <IncreaseDescreaseButtons
+                        productTitle={directusProduct.productTitle}
+                        directusId={directusProduct.id}
+                        medusaId={product.id}
+                        variant={variant}
+                        showAddToCart={true}
+                      />
+                    </CartStateWrapper>
+                  </div>
+                </Fragment>
               ))}
             </div>
 

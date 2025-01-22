@@ -7,6 +7,8 @@ interface CartButtonsProps {
     price: number;
   };
   showAddToCart: boolean;
+  medusaId?: string; // Medusa ID
+  directusId?: string;
 }
 
 /**
@@ -16,7 +18,12 @@ interface CartButtonsProps {
  * shows the cart buttons
  */
 
-const CartButtons = ({ variant, showAddToCart }: CartButtonsProps) => {
+const CartButtons = ({
+  variant,
+  showAddToCart,
+  directusId,
+  medusaId,
+}: CartButtonsProps) => {
   return (
     <div className="flex h-10 items-center gap-3">
       <div className="flex h-10 w-full items-center justify-between rounded-lg border border-primaryBorder px-4 py-1.5 shadow-custom customNav:px-2">
@@ -29,7 +36,12 @@ const CartButtons = ({ variant, showAddToCart }: CartButtonsProps) => {
         </span>
       </div>
 
-      <IncreaseDescreaseButtons showAddToCart={showAddToCart} />
+      <IncreaseDescreaseButtons
+        directusId={directusId}
+        medusaId={medusaId}
+        variant={variant}
+        showAddToCart={showAddToCart}
+      />
     </div>
   );
 };
